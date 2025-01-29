@@ -14,6 +14,9 @@ public class Order {
     public void addProduct(Product product, int quantity) {
         product.setQuantity(product.getQuantity() - quantity);
         products.add(product);
+        if (product.getQuantity() < 5) {
+            System.out.println("This product : " + product.getName() + " has a low quantiy");
+        }
     }
 
     public void removeProduct(Product product) {

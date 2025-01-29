@@ -1,3 +1,4 @@
+import java.time.Period;
 import java.util.*;
 public class Main {
     private static List<User> users = new ArrayList<>();
@@ -12,9 +13,19 @@ public class Main {
         System.out.println("Application started...");
     }
 
+    public static Inventory getInventory() {
+        return inventory;
+    }
+
     public static void main(String[] args) {
         loadFromJSON("stocks_pharma.json");
         inventory.displayProductList();
+
+        inventory.displayLowStockProducts();
+
+
+
+
         run();
     }
 }

@@ -25,6 +25,13 @@ public class Inventory implements Stockable, Serializable {
     public List<Product> getLowStockProducts() {
         return products.stream().filter(p -> p.getQuantity() < 5).toList();
     }
+    public void displayLowStockProducts() {
+        System.out.println("Low stock products:");
+        for (byte i=0; i< getLowStockProducts().size();i++) {
+            Product product = getLowStockProducts().get(i);
+            System.out.println(product.getName());
+        }
+    }
 
     public void updateStock(Product product, int quantity) {
         product.setQuantity(quantity);

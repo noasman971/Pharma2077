@@ -45,14 +45,14 @@
             "id": 5,
             "nom": "Ibuprofène",
             "prix": 3.49,
-            "quantiteStock": 200,
+            "quantiteStock": 4,
             "description": "Anti-inflammatoire non stéroïdien."
           },
           {
             "id": 6,
             "nom": "Tramadol",
             "prix": 9.99,
-            "quantiteStock": 25,
+            "quantiteStock": 4,
             "description": "Antalgique pour les douleurs modérées à sévères."
           }
         ]
@@ -65,7 +65,7 @@
             "id": 7,
             "nom": "Crème hydratante",
             "prix": 14.99,
-            "quantiteStock": 80,
+            "quantiteStock": 2,
             "description": "Crème pour hydrater les peaux sèches."
           },
           {

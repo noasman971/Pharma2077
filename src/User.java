@@ -14,4 +14,24 @@ public abstract class User {
     public void logout() {
         System.out.println(username + " has logged out.");
     }
+
+    public void placeOrder(Order order) {
+
+        Inventory inventory = Main.getInventory();
+
+        for (Product product : order.getProducts()) {
+            Product stockProduct = inventory.searchProduct(product.getName());
+            if (stockProduct.getQuantity() <= 0 ) {
+                System.out.println("Insufficient stock for : " + product.getName() + ". You can't order");
+                return;
+            }
+
+
+        System.out.println("Yes i can do this order");
+
+
+
+
+        }
+    }
 }
