@@ -4,9 +4,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class Inventory implements Stockable, Serializable {
+public class Inventory implements Stockable, Serializable, java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private List<Product> products = new ArrayList<>();
     private Map<String, Category> categories = new HashMap<>();
+    private static final String SAVE_FILE = "pharmacy_data.ser";
 
     public void addProduct(Product product) {
         products.add(product);
@@ -73,10 +75,29 @@ public class Inventory implements Stockable, Serializable {
 
     @Override
     public void saveData() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_FILE))) {
+            oos.writeObject(this.products);
+            oos.writeObject(this.categories);
+            System.out.println("Data successfully saved.");
+        } catch (IOException e) {
+            System.err.println("Error saving data: " + e.getMessage());
+        }
     }
 
     @Override
     public void loadData() {
-
+        File saveFile = new File(SAVE_FILE);
+        if (!saveFile.exists()) {
+            System.out.println("No saved data found, loading from JSON.");
+            loadFromJSON("stocks_pharma.json");
+            return;
+        }
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SAVE_FILE))) {
+            this.products = (List<Product>) ois.readObject();
+            this.categories = (Map<String, Category>) ois.readObject();
+            System.out.println("Data successfully loaded from saved file.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading saved data: " + e.getMessage());
+        }
     }
 }

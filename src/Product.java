@@ -1,4 +1,5 @@
-public class Product {
+public class Product implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private String name;
     private double price;
     private int quantity;
