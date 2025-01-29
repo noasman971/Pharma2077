@@ -1,12 +1,17 @@
 import java.time.Period;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import java.io.FileReader;
 import java.util.*;
 public class Main {
-    private static List<User> users = new ArrayList<>();
-    private static Inventory inventory = new Inventory();
-    private static List<Order> orders = new ArrayList<>();
+    public static List<User> users = new ArrayList<>();
+    public static Inventory inventory = new Inventory();
+    public static List<Order> orders = new ArrayList<>();
 
-    public static void loadFromJSON(String filePath) {
-        inventory.loadFromJSON(filePath);
+    public static void saveState() {
+        inventory.saveData();
     }
 
     public static void run() {
@@ -18,7 +23,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        loadFromJSON("stocks_pharma.json");
+        inventory.loadData();
         inventory.displayProductList();
 
         inventory.displayLowStockProducts();
@@ -31,7 +36,7 @@ public class Main {
 
 
 
-
         run();
+        saveState();
     }
 }
