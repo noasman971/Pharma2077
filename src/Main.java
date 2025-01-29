@@ -5,7 +5,7 @@ public class Main {
     private static List<Order> orders = new ArrayList<>();
 
     public static void loadFromJSON(String filePath) {
-        System.out.println("Loading data from JSON: " + filePath);
+        inventory.loadFromJSON(filePath);
     }
 
     public static void run() {
@@ -13,7 +13,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        loadFromJSON("data.json");
+        loadFromJSON("stocks_pharma.json");
+        inventory.displayProductList();
         run();
     }
 }
