@@ -22,14 +22,42 @@ public class Inventory implements Stockable, Serializable {
                 .findFirst().orElse(null);
     }
 
+
     public List<Product> getLowStockProducts() {
-        return products.stream().filter(p -> p.getQuantity() < 5).toList();
+        List<Product> lowStockProducts = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getQuantity() < 5) {
+                lowStockProducts.add(product);
+            }
+        }
+        return lowStockProducts;
     }
+
+    public List<Product> sortLowProducts() {
+        List<Product> lowStockProducts = getLowStockProducts();
+
+        for (int i = 1; i < lowStockProducts.size(); i++) {
+            Product currentProduct = lowStockProducts.get(i);
+            int currentQuantity = currentProduct.getQuantity();
+            int j = i - 1;
+
+            // Move elements that are bigger than the current product
+            while (j >= 0 && lowStockProducts.get(j).getQuantity() > currentQuantity) {
+                lowStockProducts.set(j + 1, lowStockProducts.get(j));
+                j--;
+            }
+
+            // Insert the current element in its correct position
+            lowStockProducts.set(j + 1, currentProduct);
+        }
+        return lowStockProducts;
+    }
+
     public void displayLowStockProducts() {
         System.out.println("Low stock products:");
-        for (byte i=0; i< getLowStockProducts().size();i++) {
-            Product product = getLowStockProducts().get(i);
-            System.out.println(product.getName());
+        for (byte i=0; i< sortLowProducts().size();i++) {
+            Product product = sortLowProducts().get(i);
+        System.out.println(product.getName() + ": " + product.getQuantity());
         }
     }
 
