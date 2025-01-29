@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class Inventory implements Stockable, Serializable, java.io.Serializable {
-    private static final long serialVersionUID = 1L;
     private List<Product> products = new ArrayList<>();
     private Map<String, Category> categories = new HashMap<>();
     private static final String SAVE_FILE = "pharmacy_data.ser";

@@ -24,7 +24,6 @@ public abstract class User {
      */
     public void placeOrder(Order order) {
 
-        Inventory inventory = Main.getInventory();
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Please enter the following order:");
@@ -40,8 +39,8 @@ public abstract class User {
             byte inputQuantity = sc.nextByte();
             sc.nextLine();
 
-            Product produit1 = new Product(inventory.searchProduct(inputNameProduct).getName(), inventory.searchProduct(inputNameProduct).getPrice(), inputQuantity, inventory.searchProduct(inputNameProduct).getCategory());
-            Product stockProduct = inventory.searchProduct(inputNameProduct);
+            Product produit1 = new Product(Main.inventory.searchProduct(inputNameProduct).getName(), Main.inventory.searchProduct(inputNameProduct).getPrice(), inputQuantity, Main.inventory.searchProduct(inputNameProduct).getCategory());
+            Product stockProduct = Main.inventory.searchProduct(inputNameProduct);
 
 
             if (stockProduct == null) {
