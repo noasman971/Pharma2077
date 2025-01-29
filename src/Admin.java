@@ -1,24 +1,16 @@
-public class Admin extends Users{
-
-    public Admin(String name, String password, String role) {
-        super(name, password, role);
+public class Admin extends User implements Serializable {
+    public Admin(String username, String password) {
+        super(username, password);
     }
 
-    public void manageRole(String nom, String role) {
-        //
+    public void addUser(Employee employee) {
+        System.out.println("User " + employee.username + " added.");
     }
 
-    public void newCategory(String nom, String category) {
-        //
+    public void removeUser(String username) {
+        System.out.println("User " + username + " removed.");
     }
 
-    @Override
-    public String addUser(String name, String password, String role) {
-        return "";
-    }
-
-    @Override
-    public String removeUser(String name) {
-        return "";
-    }
+    public void saveData() {}
+    public void loadData() {}
 }

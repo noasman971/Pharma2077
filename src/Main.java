@@ -1,31 +1,19 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.*;
 public class Main {
-    public static void main(String[] args) {
-        
+    private static List<User> users = new ArrayList<>();
+    private static Inventory inventory = new Inventory();
+    private static List<Order> orders = new ArrayList<>();
+
+    public static void loadFromJSON(String filePath) {
+        System.out.println("Loading data from JSON: " + filePath);
     }
 
-    public static boolean dichotomie(String[] liste, String name) {
-        int start = 0 ;
-        int end = liste.length - 1;
-        while (start <= end) {
-            int mid = (start + end) / 2;
-            if (liste[mid].equals(name)) {
-                return true;
-            }
-            if (liste[mid].compareTo(name) < 0) {
-                end = mid - 1;
-            }
-            if (liste[mid].compareTo(name) > 0) {
-                start = mid + 1;
-            }
+    public static void run() {
+        System.out.println("Application started...");
+    }
 
-        }
-        return false;
+    public static void main(String[] args) {
+        loadFromJSON("data.json");
+        run();
     }
 }
