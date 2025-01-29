@@ -22,6 +22,12 @@ public class Main {
         inventory.displayProductList();
 
         inventory.displayLowStockProducts();
+        Client nono = new Client("nonodubendo", "mdp");
+        Order order = new Order();
+
+        nono.placeOrder(order);
+        inventory.displayLowStockProducts();
+
 
 
 

@@ -11,13 +11,21 @@ public class Order {
         this.orderDate = LocalDateTime.now();
     }
 
-    public void addProduct(Product product, int quantity) {
-        product.setQuantity(product.getQuantity() - quantity);
-        products.add(product);
-        if (product.getQuantity() < 5) {
-            System.out.println("This product : " + product.getName() + " has a low quantiy");
+    public void diplayProducts() {
+        for(Product p : products){
+            System.out.println(p.getName()+ ": " + p.getQuantity());
         }
     }
+
+
+    public void addProduct(Product product, int quantity, Product productorder) {
+        products.add(productorder);
+        product.setQuantity(product.getQuantity() - quantity);
+        if (product.getQuantity() < 5) {
+            System.out.println("This product : " + product.getName() + " has a low quantiy ("+product.getQuantity()+" remaining)");
+        }
+    }
+
 
     public void removeProduct(Product product) {
         products.remove(product);

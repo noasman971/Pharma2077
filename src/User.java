@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public abstract class User {
     protected String username;
     protected String password;
@@ -15,23 +17,54 @@ public abstract class User {
         System.out.println(username + " has logged out.");
     }
 
+    /**
+     * Verification if it's possible to order
+     * Do an order
+     * @param order
+     */
     public void placeOrder(Order order) {
 
         Inventory inventory = Main.getInventory();
+        Scanner sc = new Scanner(System.in);
 
-        for (Product product : order.getProducts()) {
-            Product stockProduct = inventory.searchProduct(product.getName());
-            if (stockProduct.getQuantity() <= 0 ) {
-                System.out.println("Insufficient stock for : " + product.getName() + ". You can't order");
-                return;
+        System.out.println("Please enter the following order:");
+
+        while (true) {
+            System.out.println("Choose a product (or type 'done' to finish):");
+            String inputNameProduct = sc.nextLine();
+
+            if (inputNameProduct.equals("done")) {
+                break;
+            }
+            System.out.println("Choose a quantity:");
+            byte inputQuantity = sc.nextByte();
+            sc.nextLine();
+
+            Product produit1 = new Product(inventory.searchProduct(inputNameProduct).getName(), inventory.searchProduct(inputNameProduct).getPrice(), inputQuantity, inventory.searchProduct(inputNameProduct).getCategory());
+            Product stockProduct = inventory.searchProduct(inputNameProduct);
+
+
+            if (stockProduct == null) {
+                System.out.println("Product not found in inventory.");
+                continue;
             }
 
 
-        System.out.println("Yes i can do this order");
+            if (inputQuantity <= 0) {
+                System.out.println("Please enter a positive quantity.");
+                continue;
+            }
 
-
-
-
+            if (stockProduct.getQuantity() < inputQuantity) {
+                System.out.println("Insufficient stock for " + stockProduct.getName());
+                continue;
+            }
+            order.addProduct(stockProduct, inputQuantity, produit1);
+            System.out.println(inputQuantity + " quantity of " + produit1.getName() + " added to the order.");
         }
+        order.diplayProducts();
+
+        System.out.println("Order placed successfully.");
+
     }
 }
