@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public abstract class User {
+public abstract class User implements java.io.Serializable{
     protected String username;
     protected String password;
 
