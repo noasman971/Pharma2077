@@ -80,8 +80,11 @@ public class PharmacyMenu {
     }
 
     public static void displayMenu() {
+        Main.inventory.saveData();
+        userManager.saveData();
+
         while (true) {
-            displayLogo();
+            //displayLogo();
             System.out.println("\n===== Main Menu =====");
             if (currentUser instanceof Admin) {
                 System.out.println("1 - Manage Users");
@@ -91,8 +94,9 @@ public class PharmacyMenu {
                 System.out.println("1 - Manage Products");
                 System.out.println("2 - Manage Orders");
             } else if (currentUser instanceof Client) {
-                System.out.println("1 - Place Order");
-                System.out.println("2 - View Orders");
+                System.out.println("1 - Make an order");
+                System.out.println("2 - Watch product list");
+                System.out.println("3 - Search product");
             }
             System.out.println("9 - Logout");
             System.out.print("Enter your choice: ");
@@ -101,6 +105,9 @@ public class PharmacyMenu {
             if (choice == 9) {
                 System.out.println("Logging out...");
                 currentUser = null;
+                Main.inventory.saveData();
+                Main.orderManager.saveData();
+                Main.userManager.saveData();
                 start();
                 return;
             }
@@ -124,8 +131,9 @@ public class PharmacyMenu {
             }
         } else if (currentUser instanceof Client) {
             switch (choice) {
-                case 1 -> System.out.println("order");//placeOrder();
-                case 2 -> System.out.println("vieworder");//viewOrders();
+                case 1 -> currentUser.placeOrder();
+                case 2 -> Main.inventory.displayProductList();
+                case 3 -> Main.inventory.searchProductScanner();
                 default -> System.out.println("Invalid option, please try again.");
             }
         }
@@ -137,35 +145,72 @@ public class PharmacyMenu {
         System.out.println("2 - Remove User");
         int choice = getValidInteger();
         switch (choice) {
-            case 1 -> System.out.println("Adding user...");
-            case 2 -> System.out.println("Removing user...");
+            case 1 -> ((Admin)currentUser).addUser(Main.userManager);
+            case 2 -> ((Admin)currentUser).removeUser(Main.userManager);
             default -> System.out.println("Invalid choice.");
         }
     }
 
     private static void manageProducts() {
         displayLogo();
-        System.out.println("1 - Update Stock");
+        System.out.println("1 - Show Stock");
         System.out.println("2 - Add Item");
         System.out.println("3 - Remove Item");
+        System.out.println("4 - Search");
+        System.out.println("5 - Load delivery !");
         int choice = getValidInteger();
         switch (choice) {
-            case 1 -> System.out.println("Updating stock...");
-            case 2 -> System.out.println("Adding item...");
-            case 3 -> System.out.println("Removing item...");
-            default -> System.out.println("Invalid choice.");
+            case 1:
+                Main.inventory.displayProductListInfo();
+                break;
+            case 2 :
+                if (currentUser instanceof Employee){
+                    ((Employee)currentUser).addProduct(Main.inventory);
+                }else{
+                    ((Admin)currentUser).addProduct(Main.inventory);
+                }
+                break;
+            case 3 :
+                if (currentUser instanceof Employee) {
+                    ((Employee)currentUser).removeProduct(Main.inventory);
+                }else{
+                    ((Admin)currentUser).removeProduct(Main.inventory);
+                }
+                break;
+            case 4:
+                Main.inventory.searchProductScanner();
+                break;
+            case 5:
+                Main.inventory.loadFromJSON("stocks_pharma.json");
+                Main.inventory.saveData();
+                Main.orderManager.saveData();
+                Main.userManager.saveData();
+                break;
+            default:
+                System.out.println("Invalid choice.");
+                break;
         }
     }
 
     private static void manageOrders() {
         displayLogo();
-        System.out.println("1 - Display Orders");
-        System.out.println("2 - Display Order History");
+        System.out.println("1 - Display orders");
+        System.out.println("2 - Export sales history");
         int choice = getValidInteger();
         switch (choice) {
-            case 1 -> System.out.println("Displaying orders...");
-            case 2 -> System.out.println("Displaying order history...");
-            default -> System.out.println("Invalid choice.");
+            case 1 :
+                if (currentUser instanceof Employee){
+                    ((Employee)currentUser).displayOrders();
+                }else{
+                    ((Admin)currentUser).displayOrders();
+                }
+                break;
+            case 2 :
+                Main.salesStatistics.setupCSV();
+                break;
+            default :
+                System.out.println("Invalid choice.");
+                break;
         }
     }
 

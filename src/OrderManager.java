@@ -6,10 +6,13 @@ import java.util.List;
 class OrderManager implements Serializable, java.io.Serializable {
     private static final long serialVersionUID = 1L;
     private static final String ORDER_FILE = "orders.ser";
-    private List<Order> orders = new ArrayList<>();
+    public List<Order> orders = new ArrayList<>();
 
     public void addOrder(Order orderAdded){
         orders.add(orderAdded);
+        Main.inventory.saveData();
+        Main.orderManager.saveData();
+        Main.userManager.saveData();
     }
 
     public void sortOrders() {
@@ -17,16 +20,7 @@ class OrderManager implements Serializable, java.io.Serializable {
                 .thenComparing(Order::getOrderDate));
     }
 
-    public void displayOrders() {
-        sortOrders();
-        for (Order order : orders) {
-            if (order.isPriority()) {
-                System.out.println("Date: " + order.getFormattedOrderDate() + " | Priority | Contents: " + order.getProductsString(order.getProducts()));
-            } else {
-                System.out.println("Date: " + order.getFormattedOrderDate() + " | Contents: " + order.getProductsString(order.getProducts()));
-            }
-        }
-    }
+
 
     @Override
     public void saveData() {

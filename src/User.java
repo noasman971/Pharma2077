@@ -10,6 +10,10 @@ public abstract class User implements java.io.Serializable{
         this.password = password;
     }
 
+    public String getUsername(){
+        return this.username;
+    }
+
     public boolean login(String username, String password) {
         return this.username.equals(username) && this.password.equals(password);
     }
@@ -89,6 +93,7 @@ public abstract class User implements java.io.Serializable{
                 return;
             } else {
                 Main.orderManager.addOrder(order);
+                Main.orderManager.saveData();
                 System.out.println("Order placed successfully.");
             }
         }

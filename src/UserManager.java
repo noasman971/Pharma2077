@@ -11,7 +11,9 @@ class UserManager implements Serializable {
     public void addUser(User user) {
         users.add(user);
     }
-
+    public void removeUser(String username) {
+        users.removeIf(user -> user.getUsername().equalsIgnoreCase(username));
+    }
     public List<User> getUsers() {
         return users;
     }
@@ -43,6 +45,8 @@ class UserManager implements Serializable {
             System.err.println("Error loading users: " + e.getMessage());
         }
     }
+
+
 
 
 //    public void authenticateUser() {

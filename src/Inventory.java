@@ -91,9 +91,20 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
     /**
      * Searches for a product by its name using binary search.
      *
-     * @param productName The name of the product to search for.
      */
-    public void searchProductScanner(String productName) {
+    public void searchProductScanner() {
+        Scanner sc = new Scanner(System.in);
+        String productName;
+        while (true){
+            System.out.print("Entrer le nom d'un produit : ");
+            try {
+                productName = sc.nextLine();
+                break;
+            }catch (Exception e){
+                continue;
+            }
+        }
+
         int start = 0;
         int end = products.size() - 1;
 
@@ -157,16 +168,6 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
         return lowStockProducts;
     }
 
-    /**
-     * Display products with low stock (less than 5) sort by quantity
-     */
-    public void displayLowStockProducts() {
-        System.out.println("Low stock products:");
-        for (byte i=0; i< sortLowProducts().size();i++) {
-            Product product = sortLowProducts().get(i);
-        System.out.println(product.getName() + ": " + product.getQuantity());
-        }
-    }
 
     /**
      * Updates the stock quantity of a product.
@@ -250,9 +251,8 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
                 JSONObject categoryData = (JSONObject) obj;
                 String categoryName = (String) categoryData.get("categorie");
 
-                if (!categories.containsKey(categoryName)) {
-                    categories.put(categoryName, new Category(categoryName));
-                }
+                categories.putIfAbsent(categoryName, new Category(categoryName));
+                Category category = categories.get(categoryName);
 
                 JSONArray productArray = (JSONArray) categoryData.get("produits");
                 for (Object prodObj : productArray) {
@@ -261,14 +261,18 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
                     double price = ((Number) productData.get("prix")).doubleValue();
                     int quantity = ((Number) productData.get("quantiteStock")).intValue();
 
-                    Product product = new Product(name, price, quantity, categories.get(categoryName));
-                    this.addProduct(product);
+                    Product existingProduct = searchProduct(name);
+                    if (existingProduct != null) {
+                        existingProduct.setQuantity(existingProduct.getQuantity() + quantity);
+                    } else {
+                        Product product = new Product(name, price, quantity, category);
+                        this.addProduct(product);
+                    }
                 }
             }
-
-            System.out.println(Colors.NEON_BLUE + "Data successfully loaded from JSON." + Colors.RESET);
+            System.out.println("\u001B[34mData successfully loaded from JSON.\u001B[0m");
         } catch (Exception e) {
-            System.err.println(Colors.NEON_PINK + "Error loading JSON: " + e.getMessage() + Colors.RESET);
+            System.err.println("\u001B[35mError loading JSON: " + e.getMessage() + "\u001B[0m");
         }
     }
 

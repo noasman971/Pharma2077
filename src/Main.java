@@ -23,8 +23,6 @@ public class Main {
 //        //nono.addProduct(inventory);
 //        orderManager.displayOrders();
         //PharmacyMenu.displayMenu();
-        inventory.saveData();
-        userManager.saveData();
-        orderManager.saveData();
+
     }
 }
