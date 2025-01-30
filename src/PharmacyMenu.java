@@ -1,11 +1,13 @@
 import java.util.Scanner;
 
 public class PharmacyMenu {
-    public static Object displayLogo;
     private static Scanner scanner = new Scanner(System.in);
+    private static User currentUser = null;
+    private static UserManager userManager = Main.userManager;
 
     public static void displayLogo() {
-        System.out.println(Colors.BRIGHT_PURPLE + "                             " + Colors.MEDICAL_CYAN + "$$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\                                                    " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$$$$$$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$$$$$$$" + Colors.BRIGHT_PURPLE + "\\       ");
+        System.out.println(Colors.BRIGHT_PURPLE +
+                           "                             " + Colors.MEDICAL_CYAN + "$$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\                                                    " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$$$$$$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$$$$$$$" + Colors.BRIGHT_PURPLE + "\\       ");
         System.out.println("                             " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|                                                  " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$$ " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ \\____" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "|\\____" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "|      ");
         System.out.println("                             " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|  " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$$$$$$" + Colors.BRIGHT_PURPLE + "\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\" + Colors.MEDICAL_CYAN + "$$$$\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\  \\__/  " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|    " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/     " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/       ");
         System.out.println("                             " + Colors.MEDICAL_CYAN + "$$$$$$$  " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\  \\____" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$  _" + Colors.MEDICAL_CYAN + "$$  _" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\  \\____" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$$$$$  " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\" + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|   " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/     " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/        ");
@@ -16,125 +18,164 @@ public class PharmacyMenu {
         System.out.println(Colors.RESET);
     }
 
-    public static void displayMenu() {
-        while (true) {
-            System.out.println("");
-            System.out.println("\u001B[33m                                                                 =========== Main Menu =========== \u001B[0m");
-            System.out.println("                                                                     \u001B[36m[1]\u001B[0m Product Management ");
-            System.out.println("                                                                     \u001B[36m[2]\u001B[0m Order Management");
-            System.out.println("                                                                     \u001B[36m[3]\u001B[0m User Management");
-            System.out.println("                                                                     \u001B[36m[4]\u001B[0m Advanced Management");
-            System.out.println("                                                                     \u001B[31m[5]\u001B[0m Exit\u001B[0m");
-            System.out.println("                                                                 \u001B[33m================================= \u001B[0m");
-            System.out.println();
-            System.out.print("                                                                         Choose an option: ");
+    public static void start() {
+        userManager.loadData();
+        while (currentUser == null) {
+            displayLogo();
+            System.out.println("\nWelcome! Please choose an option:");
+            System.out.println("1 - Login");
+            System.out.println("2 - Signup");
+            System.out.print("Enter your choice: ");
             int choice = getValidInteger();
-
 
             switch (choice) {
-                case 1:
-                    manageProducts();
-                    break;
-                case 2:
-                    manageOrders();
-                    break;
-                case 3:
-                    manageUsers();
-                    break;
-                case 4:
-                    advancedManagement();
-                    break;
-                case 5:
-                    System.out.println("\u001B[31m /$$$$$$$$ /$$   /$$ /$$$$$$ /$$$$$$$$         /$$   \n" +
-                            "| $$_____/| $$  / $$|_  $$_/|__  $$__/        |  $$  \n" +
-                            "| $$      |  $$/ $$/  | $$     | $$            \\  $$ \n" +
-                            "| $$$$$    \\  $$$$/   | $$     | $$    /$$$$$$  \\  $$\n" +
-                            "| $$__/     >$$  $$   | $$     | $$   |______/   /$$/\n" +
-                            "| $$       /$$/\\  $$  | $$     | $$             /$$/ \n" +
-                            "| $$$$$$$$| $$  \\ $$ /$$$$$$   | $$            /$$/  \n" +
-                            "|________/|__/  |__/|______/   |__/           |__/ \u001B[0m");
-
-                    System.out.println();
-                    System.out.println("Closing the application...");
-                    return;
-                default:
-                    System.out.println("Invalid option, please try again.");
-
+                case 1 -> login();
+                case 2 -> signup();
+                default -> System.out.println("Invalid option, please try again.");
             }
         }
+        displayMenu();
     }
-    private static int getValidInteger() {
-        while (true) {
-            try {
-                return Integer.parseInt(scanner.nextLine().trim()); // Lire et convertir en int
-            } catch (NumberFormatException e) {
-                System.out.println();
-                System.out.print("                                                                 \u001B[31mInvalid input. Please enter a number: \u001B[0m");
 
+    private static void login() {
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine().trim();
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine().trim();
+
+        for (User user : userManager.getUsers()) {
+            if (user.login(username, password)) {
+                currentUser = user;
+                System.out.println("Login successful! Welcome, " + username + ".");
+                return;
             }
         }
-    }
-    private static void manageProducts() {
-        while (true) {
-            System.out.println();
-            System.out.println("\u001B[33m                                                                   ------ Product Management ------\u001B[0m");
-            System.out.println("                                                                     \u001B[36m[1]\u001B[0m View product list");
-            System.out.println("                                                                     \u001B[36m[2]\u001B[0m Add a product");
-            System.out.println("                                                                     \u001B[36m[3]\u001B[0m Remove a product");
-            System.out.println("                                                                     \u001B[36m[4]\u001B[0m Search for a product");
-            System.out.println("                                                                     \u001B[38;5;214m[5]\u001B[0m Back to Main Menu\u001B[0m");
-            System.out.println("\u001B[33m                                                                   ---------------------------------\u001B[0m");
-            System.out.print("                                                                         Choose an option: ");
-            int choice = getValidInteger();
-            if (choice == 5) return;
-        }
-        // Add associated functionalities
+        System.out.println("Invalid username or password. Try again.");
     }
 
-    private static void manageOrders() {
-        while (true) {
-            System.out.println();
-            System.out.println("\u001B[33m                                                                   ------ Order Management -------\u001B[0m");
-            System.out.println("                                                                     \u001B[36m[1]\u001B[0m Record an order");
-            System.out.println("                                                                     \u001B[36m[2]\u001B[0m Display order history");
-            System.out.println("                                                                     \u001B[38;5;214m[3]\u001B[0m Back to Main Menu\u001B[0m");
-            System.out.println("\u001B[33m                                                                   -------------------------------\u001B[0m");
-            System.out.print("                                                                         Choose an option: ");
-            int choice = getValidInteger();
-            if (choice == 3) return;
+    private static void signup() {
+        System.out.print("Choose a username: ");
+        String username = scanner.nextLine().trim();
+        System.out.print("Choose a password: ");
+        String password = scanner.nextLine().trim();
+        System.out.println("Select role: 1 - Admin, 2 - Employee, 3 - Client");
+        int role = getValidInteger();
+
+        User newUser = switch (role) {
+            case 1 -> new Admin(username, password);
+            case 2 -> new Employee(username, password);
+            case 3 -> new Client(username, password);
+            default -> {
+                System.out.println("Invalid role. Signup failed.");
+                yield null;
+            }
+        };
+
+        if (newUser != null) {
+            userManager.addUser(newUser);
+            userManager.saveData();
+            currentUser = newUser;
+            System.out.println("Signup successful! You are now logged in.");
         }
-        // Add associated functionalities
+    }
+
+    public static void displayMenu() {
+        while (true) {
+            displayLogo();
+            System.out.println("\n===== Main Menu =====");
+            if (currentUser instanceof Admin) {
+                System.out.println("1 - Manage Users");
+                System.out.println("2 - Manage Products");
+                System.out.println("3 - Manage Orders");
+            } else if (currentUser instanceof Employee) {
+                System.out.println("1 - Manage Products");
+                System.out.println("2 - Manage Orders");
+            } else if (currentUser instanceof Client) {
+                System.out.println("1 - Place Order");
+                System.out.println("2 - View Orders");
+            }
+            System.out.println("9 - Logout");
+            System.out.print("Enter your choice: ");
+            int choice = getValidInteger();
+
+            if (choice == 9) {
+                System.out.println("Logging out...");
+                currentUser = null;
+                start();
+                return;
+            }
+            executeChoice(choice);
+        }
+    }
+
+    private static void executeChoice(int choice) {
+        if (currentUser instanceof Admin) {
+            switch (choice) {
+                case 1 -> manageUsers();
+                case 2 -> manageProducts();
+                case 3 -> manageOrders();
+                default -> System.out.println("Invalid option, please try again.");
+            }
+        } else if (currentUser instanceof Employee) {
+            switch (choice) {
+                case 1 -> manageProducts();
+                case 2 -> manageOrders();
+                default -> System.out.println("Invalid option, please try again.");
+            }
+        } else if (currentUser instanceof Client) {
+            switch (choice) {
+                case 1 -> System.out.println("order");//placeOrder();
+                case 2 -> System.out.println("vieworder");//viewOrders();
+                default -> System.out.println("Invalid option, please try again.");
+            }
+        }
     }
 
     private static void manageUsers() {
-        while (true) {
-            System.out.println();
-            System.out.println("\u001B[33m                                                                   ------ User Management --------\u001B[0m");
-            System.out.println("                                                                     \u001B[36m[1]\u001B[0m Add a user");
-            System.out.println("                                                                     \u001B[36m[2]\u001B[0m Remove a user");
-            System.out.println("                                                                     \u001B[36m[3]\u001B[0m Log in");
-            System.out.println("                                                                     \u001B[38;5;214m[4]\u001B[0m Back to Main Menu\u001B[0m");
-            System.out.println("\u001B[33m                                                                   -------------------------------\u001B[0m");
-            System.out.print("                                                                         Choose an option: ");
-            int choice = getValidInteger();
-            if (choice == 4) return;
+        displayLogo();
+        System.out.println("1 - Add User");
+        System.out.println("2 - Remove User");
+        int choice = getValidInteger();
+        switch (choice) {
+            case 1 -> System.out.println("Adding user...");
+            case 2 -> System.out.println("Removing user...");
+            default -> System.out.println("Invalid choice.");
         }
-        // Add associated functionalities
     }
 
-    private static void advancedManagement() {
-        while (true) {
-            System.out.println();
-            System.out.println("\u001B[33m                                                                   ------ Advanced Management ------\u001B[0m");
-            System.out.println("                                                                     \u001B[36m[1]\u001B[0m Display low stock products");
-            System.out.println("                                                                     \u001B[36m[2]\u001B[0m Save/Load data");
-            System.out.println("                                                                     \u001B[36m[3]\u001B[0m Export statistics");
-            System.out.println("                                                                     \u001B[38;5;214m[4]\u001B[0m Back to Main Menu\u001B[0m");
-            System.out.println("\u001B[33m                                                                   ---------------------------------\u001B[0m");
-            System.out.print("                                                                         Choose an option: ");
-            int choice = getValidInteger();
-            if (choice == 4) return;
+    private static void manageProducts() {
+        displayLogo();
+        System.out.println("1 - Update Stock");
+        System.out.println("2 - Add Item");
+        System.out.println("3 - Remove Item");
+        int choice = getValidInteger();
+        switch (choice) {
+            case 1 -> System.out.println("Updating stock...");
+            case 2 -> System.out.println("Adding item...");
+            case 3 -> System.out.println("Removing item...");
+            default -> System.out.println("Invalid choice.");
         }
-        // Add associated functionalities
+    }
+
+    private static void manageOrders() {
+        displayLogo();
+        System.out.println("1 - Display Orders");
+        System.out.println("2 - Display Order History");
+        int choice = getValidInteger();
+        switch (choice) {
+            case 1 -> System.out.println("Displaying orders...");
+            case 2 -> System.out.println("Displaying order history...");
+            default -> System.out.println("Invalid choice.");
+        }
+    }
+
+    private static int getValidInteger() {
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.print("Invalid input. Please enter a number: ");
+            }
+        }
     }
 }

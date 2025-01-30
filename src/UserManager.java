@@ -12,6 +12,9 @@ class UserManager implements Serializable {
         users.add(user);
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
     @Override
     public void saveData() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USER_FILE))) {
@@ -42,43 +45,45 @@ class UserManager implements Serializable {
     }
 
 
-    public void authenticateUser() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome! Choose an option:");
-        System.out.println("1. Login");
-        System.out.println("2. Sign up");
-        System.out.print("Enter your choice: ");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
+//    public void authenticateUser() {
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("Welcome! Choose an option:");
+//        System.out.println("1. Login");
+//        System.out.println("2. Sign up");
+//        System.out.print("Enter your choice: ");
+//        int choice = scanner.nextInt();
+//        scanner.nextLine();
+//
+//        if (choice == 2) {
+//            System.out.print("Enter new username: ");
+//            String username = scanner.nextLine();
+//            System.out.print("Enter new password: ");
+//            String password = scanner.nextLine();
+//            Client newUser = new Client(username, password);
+//            addUser(newUser);
+//            saveData();
+//            currentUser = newUser;
+//            System.out.println("Sign-up successful! Logged in as " + username);
+//        } else {
+//            System.out.print("Enter username: ");
+//            String username = scanner.nextLine();
+//            System.out.print("Enter password: ");
+//            String password = scanner.nextLine();
+//
+//            for (User user : users) {
+//                if (user.login(username, password)) {
+//                    currentUser = user;
+//                    System.out.println("Login successful! Welcome " + username);
+//                    return;
+//                }
+//            }
+//            System.out.println("Invalid credentials");
+//
+//            //need clear
+//            PharmacyMenu.displayLogo();
+//            authenticateUser();
+//        }
+//    }
 
-        if (choice == 2) {
-            System.out.print("Enter new username: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter new password: ");
-            String password = scanner.nextLine();
-            Client newUser = new Client(username, password);
-            addUser(newUser);
-            saveData();
-            currentUser = newUser;
-            System.out.println("Sign-up successful! Logged in as " + username);
-        } else {
-            System.out.print("Enter username: ");
-            String username = scanner.nextLine();
-            System.out.print("Enter password: ");
-            String password = scanner.nextLine();
 
-            for (User user : users) {
-                if (user.login(username, password)) {
-                    currentUser = user;
-                    System.out.println("Login successful! Welcome " + username);
-                    return;
-                }
-            }
-            System.out.println("Invalid credentials");
-
-            //need clear
-            PharmacyMenu.displayLogo();
-            authenticateUser();
-        }
-    }
 }

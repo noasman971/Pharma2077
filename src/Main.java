@@ -15,8 +15,7 @@ public class Main {
         userManager.loadData();
         orderManager.loadData();
         run();
-        PharmacyMenu.displayLogo();
-        userManager.authenticateUser();
+        PharmacyMenu.start();
 //        inventory.displayProductListInfo();
 //        orderManager.displayOrders();
 //        Employee nono = new Employee("nonodubendo", "mdp");
