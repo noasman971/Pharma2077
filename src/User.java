@@ -47,49 +47,50 @@ public abstract class User implements java.io.Serializable{
                 Product stockProduct = Main.inventory.searchProduct(inputNameProduct);
 
 
-            if (stockProduct == null) {
-                System.out.println("Product not found in inventory.");
-                continue;
-            }
+                if (stockProduct == null) {
+                    System.out.println("Product not found in inventory.");
+                    continue;
+                }
 
 
-            if (inputQuantity <= 0) {
-                System.out.println("Please enter a positive quantity.");
-                continue;
-            }
+                if (inputQuantity <= 0) {
+                    System.out.println("Please enter a positive quantity.");
+                    continue;
+                }
 
-            if (stockProduct.getQuantity() < inputQuantity) {
-                System.out.println("Insufficient stock for " + stockProduct.getName());
+                if (stockProduct.getQuantity() < inputQuantity) {
+                    System.out.println("Insufficient stock for " + stockProduct.getName());
+                    continue;
+                } else {
+                    order.addProduct(stockProduct, inputQuantity, produit1);
+                    Sale sale = new Sale(produit1.getName(), produit1.getQuantity(), produit1.getPrice());
+                    SalesStatistics.addSale(sale);
+                    System.out.println(inputQuantity + " quantity of " + produit1.getName() + " added to the order.");
+                }
+            } catch (Exception e) {
                 continue;
-            }else{
-            order.addProduct(stockProduct, inputQuantity, produit1);
-            Sale sale = new Sale(produit1.getName(), produit1.getQuantity(), produit1.getPrice());
-            SalesStatistics.addSale(sale);
-            System.out.println(inputQuantity + " quantity of " + produit1.getName() + " added to the order.");
             }
-        }catch (Exception e){
-                continue;
-            }
-        while (choice) {
-            System.out.println("This command has priority ? (yes/no)");
-            String priority = sc.nextLine();
-            if (priority.toLowerCase().equals("yes")) {
-                order.setPriority(true);
-                choice = false;
-            } else if (priority.toLowerCase().equals("no")) {
-                //BECAUSE REALLY, WE NEVER KNOW
-                order.setPriority(false);
-                choice = false;
+            while (choice) {
+                System.out.println("This command has priority ? (yes/no)");
+                String priority = sc.nextLine();
+                if (priority.toLowerCase().equals("yes")) {
+                    order.setPriority(true);
+                    choice = false;
+                } else if (priority.toLowerCase().equals("no")) {
+                    //BECAUSE REALLY, WE NEVER KNOW
+                    order.setPriority(false);
+                    choice = false;
 
+                }
             }
-        }
-        order.diplayProducts();
-        if(order.getProducts().size() == 0){
-            System.out.println("There are no products in your order.");
-            return;
-        } else {
-            Main.orderManager.addOrder(order);
-            System.out.println("Order placed successfully.");
+            order.diplayProducts();
+            if (order.getProducts().size() == 0) {
+                System.out.println("There are no products in your order.");
+                return;
+            } else {
+                Main.orderManager.addOrder(order);
+                System.out.println("Order placed successfully.");
+            }
         }
 
     }
