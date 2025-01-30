@@ -15,10 +15,11 @@ public class Main {
         orderManager.loadData();
         run();
         inventory.displayProductListInfo();
-        orderManager.displayOrders();
         Employee nono = new Employee("nonodubendo", "mdp");
         //nono.placeOrder();
         //nono.addProduct(inventory);
+        inventory.loadFromJSON("stocks_pharma.json");
+        inventory.displayProductListInfo();
         orderManager.displayOrders();
 
         inventory.saveData();

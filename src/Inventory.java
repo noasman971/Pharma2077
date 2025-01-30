@@ -236,14 +236,19 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
                     double price = ((Number) productData.get("prix")).doubleValue();
                     int quantity = ((Number) productData.get("quantiteStock")).intValue();
 
-                    Product product = new Product(name, price, quantity, categories.get(categoryName));
-                    this.addProduct(product);
+                    Product existingProduct = searchProduct(name);
+                    if (existingProduct != null) {
+                        existingProduct.setQuantity(existingProduct.getQuantity() + quantity);
+                    } else {
+                        Product product = new Product(name, price, quantity, categories.get(categoryName));
+                        this.addProduct(product);
+                    }
                 }
             }
 
-            System.out.println(Colors.NEON_BLUE + "Data successfully loaded from JSON." + Colors.RESET);
+            System.out.println("Inventory successfully updated from JSON.");
         } catch (Exception e) {
-            System.err.println(Colors.NEON_PINK + "Error loading JSON: " + e.getMessage() + Colors.RESET);
+            System.err.println("Error loading JSON: " + e.getMessage());
         }
     }
 
