@@ -64,6 +64,10 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
         }
     }
 
+    /**
+     * Searches for a product by its name using binary search.
+     * @param productName The name of the product to search.
+     */
     public Product searchProduct(String productName) {
         int start = 0;
         int end = products.size() - 1;
@@ -88,10 +92,7 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
         }
         return null;
     }
-    /**
-     * Searches for a product by its name using binary search.
-     *
-     */
+
     public void searchProductScanner() {
         Scanner sc = new Scanner(System.in);
         String productName;
@@ -210,8 +211,14 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
 
             // Print each product
             for (Product product : products) {
-                System.out.println(Colors.LIGHT_CYAN + product.getName() + " // " + product.getPrice() + "$ // Quantity : " + product.getQuantity() + Colors.RESET );
+                System.out.println(Colors.LIGHT_CYAN + product.getName() + " ||" + product.getPrice() + "$ || Quantity : " + product.getQuantity() + Colors.RESET );
             }
+            for (Product product : products) {
+                if (product.getQuantity() < 5) {
+                    System.out.println("This product : " + product.getName() + " has a low quantiy ("+product.getQuantity()+" remaining)");
+                }
+            }
+
         }
     }
 
@@ -281,7 +288,7 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_FILE))) {
             oos.writeObject(this.products);
             oos.writeObject(this.categories);
-            System.out.println("Data successfully saved.");
+            System.out.println(Colors.NEON_BLUE + "Data successfully saved." + Colors.RESET);
         } catch (IOException e) {
             System.err.println("Error saving data: " + e.getMessage());
         }
@@ -291,14 +298,14 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
     public void loadData() {
         File saveFile = new File(SAVE_FILE);
         if (!saveFile.exists()) {
-            System.out.println("No saved data found, loading from JSON.");
+            System.out.println(Colors.NEON_PINK + "No saved data found, loading from JSON." + Colors.RESET);
             loadFromJSON("stocks_pharma.json");
             return;
         }
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SAVE_FILE))) {
             this.products = (List<Product>) ois.readObject();
             this.categories = (Map<String, Category>) ois.readObject();
-            System.out.println("Data successfully loaded from saved file.");
+            System.out.println(Colors.NEON_BLUE + "Data successfully loaded from saved file." + Colors.RESET);
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error loading saved data: " + e.getMessage());
         }

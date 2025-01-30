@@ -21,9 +21,9 @@ class UserManager implements Serializable {
     public void saveData() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(USER_FILE))) {
             oos.writeObject(users);
-            System.out.println("Users successfully saved.");
+            System.out.println(Colors.NEON_BLUE + "Users successfully saved." + Colors.RESET);
         } catch (IOException e) {
-            System.err.println("Error saving users: " + e.getMessage());
+            System.err.println(Colors.NEON_PINK + "Error saving users: " + e.getMessage() + Colors.RESET);
         }
     }
 
@@ -31,7 +31,7 @@ class UserManager implements Serializable {
     public void loadData() {
         File userFile = new File(USER_FILE);
         if (!userFile.exists()) {
-            System.out.println("No saved users found, creating default users.");
+            System.out.println(Colors.NEON_PINK + "No saved users found, creating default users." + Colors.RESET);
             users.add(new Admin("admin1", "ad"));
             users.add(new Employee("employee1", "em"));
             users.add(new Client("client1", "cl"));
@@ -40,9 +40,9 @@ class UserManager implements Serializable {
         }
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(USER_FILE))) {
             users = (List<User>) ois.readObject();
-            System.out.println("Users successfully loaded from saved file.");
+            System.out.println(Colors.NEON_BLUE + "Users successfully loaded from saved file." + Colors.RESET);
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error loading users: " + e.getMessage());
+            System.err.println(Colors.NEON_PINK + "Error loading users: " + e.getMessage() + Colors.RESET);
         }
     }
 

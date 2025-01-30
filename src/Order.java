@@ -16,7 +16,7 @@ public class Order implements java.io.Serializable{
 
     public void diplayProducts() {
         for(Product p : products){
-            System.out.println(p.getName()+ ": " + p.getQuantity());
+            System.out.println(Colors.LIGHT_CYAN + p.getName()+ ": " + p.getQuantity() + Colors.RESET);
         }
     }
 
@@ -24,9 +24,7 @@ public class Order implements java.io.Serializable{
     public void addProduct(Product product, int quantity, Product productorder) {
         products.add(productorder);
         product.setQuantity(product.getQuantity() - quantity);
-        if (product.getQuantity() < 5) {
-            System.out.println("This product : " + product.getName() + " has a low quantiy ("+product.getQuantity()+" remaining)");
-        }
+
     }
 
 

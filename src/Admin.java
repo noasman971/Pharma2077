@@ -14,17 +14,17 @@ public class Admin extends User implements java.io.Serializable{
 
         while (true) {
             try {
-                System.out.print("Enter new employee username: ");
+                System.out.print(Colors.BRIGHT_PURPLE + "Enter new employee username: " + Colors.RESET);
                 username = scanner.nextLine().trim();
                 if (username.isEmpty()) {
-                    System.out.println("Username cannot be empty. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Username cannot be empty. Try again." + Colors.RESET);
                     continue;
                 }
 
-                System.out.print("Enter new employee password: ");
+                System.out.print(Colors.BRIGHT_PURPLE + "Enter new employee password: " + Colors.RESET);
                 password = scanner.nextLine().trim();
                 if (password.isEmpty()) {
-                    System.out.println("Password cannot be empty. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Password cannot be empty. Try again." + Colors.RESET);
                     continue;
                 }
 
@@ -33,10 +33,10 @@ public class Admin extends User implements java.io.Serializable{
                 Main.inventory.saveData();
                 Main.orderManager.saveData();
                 Main.userManager.saveData();
-                System.out.println("Employee " + username + " added successfully.");
+                System.out.println(Colors.CYBER_YELLOW + "Employee " + username + " added successfully." + Colors.RESET);
                 break;
             } catch (Exception e) {
-                System.out.println("An error occurred. Please try again.");
+                System.out.println(Colors.NEON_PINK + "An error occurred. Please try again." + Colors.RESET);
             }
         }
     }
@@ -46,16 +46,16 @@ public class Admin extends User implements java.io.Serializable{
 
         while (true) {
             try {
-                System.out.print("Enter username of employee to remove: ");
+                System.out.print(Colors.BRIGHT_PURPLE + "Enter username of employee to remove: " + Colors.RESET);
                 username = scanner.nextLine().trim();
                 if (username.isEmpty()) {
-                    System.out.println("Username cannot be empty. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Username cannot be empty. Try again." + Colors.RESET);
                     continue;
                 }
 
                 String finalUsername = username;
                 if (userManager.getUsers().stream().noneMatch(user -> user.getUsername().equalsIgnoreCase(finalUsername))) {
-                    System.out.println("User " + username + " not found. Try again.");
+                    System.out.println(Colors.NEON_PINK + "User " + username + " not found. Try again." + Colors.RESET);
                     continue;
                 }
 
@@ -65,7 +65,7 @@ public class Admin extends User implements java.io.Serializable{
                 Main.userManager.saveData();
                 break;
             } catch (Exception e) {
-                System.out.println("An error occurred. Please try again.");
+                System.out.println(Colors.NEON_PINK + "An error occurred. Please try again." + Colors.RESET);
             }
         }
     }
@@ -79,31 +79,31 @@ public class Admin extends User implements java.io.Serializable{
                 System.out.print("Enter product name: ");
                 productName = scanner.nextLine().trim();
                 if (productName.isEmpty()) {
-                    System.out.println("Product name cannot be empty. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Product name cannot be empty. Try again." + Colors.RESET);
                     continue;
                 }
 
                 Product product = inventory.searchProduct(productName);
                 if (product == null) {
-                    System.out.println("Product not found in inventory. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Product not found in inventory. Try again." + Colors.RESET);
                     continue;
                 }
 
                 System.out.print("Enter quantity to add: ");
                 quantity = Integer.parseInt(scanner.nextLine().trim());
                 if (quantity <= 0) {
-                    System.out.println("Quantity must be greater than zero. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Quantity must be greater than zero. Try again." + Colors.RESET);
                     continue;
                 }
 
                 product.setQuantity(product.getQuantity() + quantity);
-                System.out.println("Product quantity updated successfully.");
+                System.out.println(Colors.CYBER_YELLOW + "Product quantity updated successfully." + Colors.RESET);
                 Main.inventory.saveData();
                 Main.orderManager.saveData();
                 Main.userManager.saveData();
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number for quantity.");
+                System.out.println(Colors.NEON_PINK + "Invalid input. Please enter a valid number for quantity." + Colors.RESET);
             }
         }
     }
@@ -117,35 +117,35 @@ public class Admin extends User implements java.io.Serializable{
                 System.out.print("Enter product name: ");
                 productName = scanner.nextLine().trim();
                 if (productName.isEmpty()) {
-                    System.out.println("Product name cannot be empty. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Product name cannot be empty. Try again." + Colors.RESET);
                     continue;
                 }
 
                 Product product = inventory.searchProduct(productName);
                 if (product == null) {
-                    System.out.println("Product not found in inventory. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Product not found in inventory. Try again." + Colors.RESET);
                     continue;
                 }
 
                 System.out.print("Enter quantity to remove: ");
                 quantity = Integer.parseInt(scanner.nextLine().trim());
                 if (quantity <= 0) {
-                    System.out.println("Quantity must be greater than zero. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Quantity must be greater than zero. Try again." + Colors.RESET);
                     continue;
                 }
                 if (quantity > product.getQuantity()) {
-                    System.out.println("Not enough stock to remove that amount. Try again.");
+                    System.out.println(Colors.NEON_PINK + "Not enough stock to remove that amount. Try again." + Colors.RESET);
                     continue;
                 }
 
                 product.setQuantity(product.getQuantity() - quantity);
-                System.out.println("Product quantity updated successfully.");
+                System.out.println(Colors.CYBER_YELLOW + "Product quantity updated successfully." + Colors.RESET);
                 Main.inventory.saveData();
                 Main.orderManager.saveData();
                 Main.userManager.saveData();
                 break;
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a valid number for quantity.");
+                System.out.println(Colors.NEON_PINK + "Invalid input. Please enter a valid number for quantity." + Colors.RESET);
             }
         }
     }

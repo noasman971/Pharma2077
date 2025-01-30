@@ -26,7 +26,7 @@ class OrderManager implements Serializable, java.io.Serializable {
     public void saveData() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ORDER_FILE))) {
             oos.writeObject(orders);
-            System.out.println("Orders successfully saved.");
+            System.out.println(Colors.NEON_GREEN + "Orders successfully saved." + Colors.RESET);
         } catch (IOException e) {
             System.err.println("Error saving orders: " + e.getMessage());
         }
@@ -36,12 +36,12 @@ class OrderManager implements Serializable, java.io.Serializable {
     public void loadData() {
         File orderFile = new File(ORDER_FILE);
         if (!orderFile.exists()) {
-            System.out.println("No saved orders found.");
+            System.out.println(Colors.NEON_PINK + "No saved orders found." + Colors.RESET);
             return;
         }
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ORDER_FILE))) {
             orders = (List<Order>) ois.readObject();
-            System.out.println("Orders successfully loaded from saved file.");
+            System.out.println(Colors.NEON_BLUE + "Orders successfully loaded from saved file." + Colors.RESET);
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error loading orders: " + e.getMessage());
         }

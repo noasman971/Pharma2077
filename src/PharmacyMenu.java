@@ -1,10 +1,20 @@
+import java.awt.*;
 import java.util.Scanner;
 
+/**
+ * The PharmacyMenu class handles the interactive menu for a pharmacy system,
+ * allowing users to log in, sign up, and access the system's main features based on their role.
+ * It displays various menus and provides access to functionalities for Admin, Employee, and Client users.
+ */
 public class PharmacyMenu {
     private static Scanner scanner = new Scanner(System.in);
     private static User currentUser = null;
     private static UserManager userManager = Main.userManager;
 
+    /**
+     * Displays the logo in the terminal with colors for a cyberpunk pharmacy theme.
+     * The logo is composed of text art and is printed using predefined colors from the Colors class.
+     */
     public static void displayLogo() {
         System.out.println(Colors.BRIGHT_PURPLE +
                            "                             " + Colors.MEDICAL_CYAN + "$$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\                                                    " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$$$$$$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$$$$$$$" + Colors.BRIGHT_PURPLE + "\\       ");
@@ -18,47 +28,61 @@ public class PharmacyMenu {
         System.out.println(Colors.RESET);
     }
 
+    /**
+     * Starts the pharmacy system by loading user data and presenting the login/signup options.
+     * Continuously prompts the user to log in or sign up until a user is authenticated.
+     */
     public static void start() {
         userManager.loadData();
         while (currentUser == null) {
             displayLogo();
-            System.out.println("\nWelcome! Please choose an option:");
-            System.out.println("1 - Login");
-            System.out.println("2 - Signup");
-            System.out.print("Enter your choice: ");
+            System.out.println(Colors.NEON_GREEN + "\nWelcome! Please choose an option:" + Colors.RESET);
+            System.out.println(Colors.LIGHT_CYAN + "1 - Login" + Colors.RESET);
+            System.out.println(Colors.LIGHT_CYAN + "2 - Signup" + Colors.RESET);
+            System.out.print(Colors.BRIGHT_PURPLE + "Enter your choice: " + Colors.RESET);
             int choice = getValidInteger();
 
             switch (choice) {
                 case 1 -> login();
                 case 2 -> signup();
-                default -> System.out.println("Invalid option, please try again.");
+                default -> System.out.println(Colors.NEON_PINK + "Invalid option, please try again." + Colors.RESET);
             }
         }
         displayMenu();
     }
 
+    /**
+     * Prompts the user for their username and password to log in.
+     * If the credentials match an existing user, the user is logged in and welcomed.
+     * If the login fails, an error message is shown.
+     */
     private static void login() {
-        System.out.print("Enter username: ");
+        System.out.print(Colors.BRIGHT_PURPLE + "Enter username: " + Colors.RESET);
         String username = scanner.nextLine().trim();
-        System.out.print("Enter password: ");
+        System.out.print(Colors.BRIGHT_PURPLE + "Enter password: " + Colors.RESET);
         String password = scanner.nextLine().trim();
 
         for (User user : userManager.getUsers()) {
             if (user.login(username, password)) {
                 currentUser = user;
-                System.out.println("Login successful! Welcome, " + username + ".");
+                System.out.println(Colors.NEON_GREEN + "Login successful! Welcome, " + username + "." + Colors.RESET);
                 return;
             }
         }
-        System.out.println("Invalid username or password. Try again.");
+        System.out.println(Colors.NEON_PINK + "Invalid username or password. Try again." + Colors.RESET);
     }
 
+    /**
+     * Prompts the user to choose a username, password, and role (Admin, Employee, or Client)
+     * to sign up for a new account. The new user is then added to the user manager.
+     * If the role is invalid, the signup fails.
+     */
     private static void signup() {
-        System.out.print("Choose a username: ");
+        System.out.print(Colors.BRIGHT_PURPLE + "Choose a username: " + Colors.RESET);
         String username = scanner.nextLine().trim();
-        System.out.print("Choose a password: ");
+        System.out.print(Colors.BRIGHT_PURPLE + "Choose a password: " + Colors.RESET);
         String password = scanner.nextLine().trim();
-        System.out.println("Select role: 1 - Admin, 2 - Employee, 3 - Client");
+        System.out.println(Colors.NEON_BLUE + "Select role: 1 - Admin, 2 - Employee, 3 - Client" + Colors.RESET);
         int role = getValidInteger();
 
         User newUser = switch (role) {
@@ -66,7 +90,7 @@ public class PharmacyMenu {
             case 2 -> new Employee(username, password);
             case 3 -> new Client(username, password);
             default -> {
-                System.out.println("Invalid role. Signup failed.");
+                System.out.println(Colors.NEON_PINK + "Invalid role. Signup failed." + Colors.RESET);
                 yield null;
             }
         };
@@ -75,35 +99,40 @@ public class PharmacyMenu {
             userManager.addUser(newUser);
             userManager.saveData();
             currentUser = newUser;
-            System.out.println("Signup successful! You are now logged in.");
+            System.out.println(Colors.NEON_GREEN + "Signup successful! You are now logged in." + Colors.RESET);
         }
     }
 
+    /**
+     * Displays the main menu based on the current user's role (Admin, Employee, or Client).
+     * Provides access to different functionalities such as managing users, products, or placing orders.
+     * The user can also log out from this menu.
+     */
     public static void displayMenu() {
         Main.inventory.saveData();
         userManager.saveData();
 
         while (true) {
             //displayLogo();
-            System.out.println("\n===== Main Menu =====");
+            System.out.println(Colors.NEON_BLUE + "\n===== Main Menu =====" + Colors.RESET);
             if (currentUser instanceof Admin) {
-                System.out.println("1 - Manage Users");
-                System.out.println("2 - Manage Products");
-                System.out.println("3 - Manage Orders");
+                System.out.println(Colors.LIGHT_CYAN + "1 - Manage Users" + Colors.RESET);
+                System.out.println(Colors.LIGHT_CYAN +"2 - Manage Products" + Colors.RESET);
+                System.out.println(Colors.LIGHT_CYAN + "3 - Manage Orders" + Colors.RESET);
             } else if (currentUser instanceof Employee) {
-                System.out.println("1 - Manage Products");
-                System.out.println("2 - Manage Orders");
+                System.out.println(Colors.LIGHT_CYAN + "1 - Manage Products" + Colors.RESET);
+                System.out.println(Colors.LIGHT_CYAN + "2 - Manage Orders" + Colors.RESET);
             } else if (currentUser instanceof Client) {
-                System.out.println("1 - Make an order");
-                System.out.println("2 - Watch product list");
-                System.out.println("3 - Search product");
+                System.out.println(Colors.LIGHT_CYAN + "1 - Make an order" + Colors.RESET);
+                System.out.println(Colors.LIGHT_CYAN + "2 - Watch product list" + Colors.RESET);
+                System.out.println(Colors.LIGHT_CYAN + "3 - Search product" + Colors.RESET);
             }
-            System.out.println("9 - Logout");
-            System.out.print("Enter your choice: ");
+            System.out.println("9 - Logout" + Colors.RESET);
+            System.out.print(Colors.BRIGHT_PURPLE + "Enter your choice: " + Colors.RESET);
             int choice = getValidInteger();
 
             if (choice == 9) {
-                System.out.println("Logging out...");
+                System.out.println(Colors.NEON_PINK + "Logging out..."+ Colors.RESET);
                 currentUser = null;
                 Main.inventory.saveData();
                 Main.orderManager.saveData();
@@ -115,49 +144,64 @@ public class PharmacyMenu {
         }
     }
 
+    /**
+     * Executes the chosen action based on the user's role.
+     * The options vary depending on whether the user is an Admin, Employee, or Client.
+     * After performing the action, the menu is displayed again.
+     *
+     * @param choice the user's choice from the menu
+     */
     private static void executeChoice(int choice) {
         if (currentUser instanceof Admin) {
             switch (choice) {
                 case 1 -> manageUsers();
                 case 2 -> manageProducts();
                 case 3 -> manageOrders();
-                default -> System.out.println("Invalid option, please try again.");
+                default -> System.out.println(Colors.NEON_PINK + "Invalid option, please try again." + Colors.RESET);
             }
         } else if (currentUser instanceof Employee) {
             switch (choice) {
                 case 1 -> manageProducts();
                 case 2 -> manageOrders();
-                default -> System.out.println("Invalid option, please try again.");
+                default -> System.out.println(Colors.NEON_PINK  + "Invalid option, please try again." + Colors.RESET);
             }
         } else if (currentUser instanceof Client) {
             switch (choice) {
                 case 1 -> currentUser.placeOrder();
                 case 2 -> Main.inventory.displayProductList();
                 case 3 -> Main.inventory.searchProductScanner();
-                default -> System.out.println("Invalid option, please try again.");
+                default -> System.out.println(Colors.NEON_PINK  + "Invalid option, please try again." + Colors.RESET);
             }
         }
     }
 
+    /**
+     * Allows the Admin user to manage other users (add or remove users).
+     * Displays the user management options and prompts the Admin to choose an action.
+     */
     private static void manageUsers() {
         displayLogo();
-        System.out.println("1 - Add User");
-        System.out.println("2 - Remove User");
+        System.out.println(Colors.LIGHT_CYAN + "1 - Add User" + Colors.RESET);
+        System.out.println(Colors.LIGHT_CYAN + "2 - Remove User" + Colors.RESET);
         int choice = getValidInteger();
         switch (choice) {
             case 1 -> ((Admin)currentUser).addUser(Main.userManager);
             case 2 -> ((Admin)currentUser).removeUser(Main.userManager);
-            default -> System.out.println("Invalid choice.");
+            default -> System.out.println(Colors.NEON_PINK + "Invalid choice." + Colors.RESET);
         }
     }
 
+    /**
+     * Allows the Admin or Employee user to manage products (view stock, add, remove, or search products).
+     * Displays the product management options and performs the selected action.
+     */
     private static void manageProducts() {
         displayLogo();
-        System.out.println("1 - Show Stock");
-        System.out.println("2 - Add Item");
-        System.out.println("3 - Remove Item");
-        System.out.println("4 - Search");
-        System.out.println("5 - Load delivery !");
+        System.out.println(Colors.LIGHT_CYAN + "1 - Show Stock" + Colors.RESET);
+        System.out.println(Colors.LIGHT_CYAN + "2 - Add Item" + Colors.RESET);
+        System.out.println(Colors.LIGHT_CYAN + "3 - Remove Item" + Colors.RESET);
+        System.out.println(Colors.LIGHT_CYAN + "4 - Search" + Colors.RESET);
+        System.out.println(Colors.LIGHT_CYAN + "5 - Load delivery !" + Colors.RESET);
         int choice = getValidInteger();
         switch (choice) {
             case 1:
@@ -187,15 +231,16 @@ public class PharmacyMenu {
                 Main.userManager.saveData();
                 break;
             default:
-                System.out.println("Invalid choice.");
+                System.out.println(Colors.NEON_PINK + "Invalid choice." + Colors.RESET);
                 break;
         }
     }
 
+
     private static void manageOrders() {
         displayLogo();
-        System.out.println("1 - Display orders");
-        System.out.println("2 - Export sales history");
+        System.out.println(Colors.LIGHT_CYAN + "1 - Display orders" + Colors.RESET);
+        System.out.println(Colors.LIGHT_CYAN + "2 - Export sales history"+ Colors.RESET);
         int choice = getValidInteger();
         switch (choice) {
             case 1 :
@@ -209,17 +254,23 @@ public class PharmacyMenu {
                 Main.salesStatistics.setupCSV();
                 break;
             default :
-                System.out.println("Invalid choice.");
+                System.out.println(Colors.NEON_PINK + "Invalid choice." + Colors.RESET);
                 break;
         }
     }
 
+    /**
+     * Prompts the user to enter a valid integer input from the console.
+     * Ensures that the input is a valid integer and returns it.
+     *
+     * @return a valid integer entered by the user
+     */
     private static int getValidInteger() {
         while (true) {
             try {
                 return Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {
-                System.out.print("Invalid input. Please enter a number: ");
+                System.out.print(Colors.NEON_PINK +"Invalid input. Please enter a number: " + Colors.RESET);
             }
         }
     }

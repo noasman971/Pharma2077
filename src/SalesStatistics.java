@@ -12,7 +12,7 @@ public class SalesStatistics {
     public void setupCSV() {
 
         if (sales.isEmpty()) {
-            System.out.println("Aucune vente à traiter. Annulation de l'exécution.");
+            System.out.println(Colors.CYBER_YELLOW + "Nothing here. End of execution." + Colors.RESET);
             return;  // Annuler l'exécution si la liste des ventes est vide
         }
         // Storing statistics in a HashMap
@@ -108,7 +108,7 @@ public class SalesStatistics {
             writer.write(String.format("%-35s %-25s \n", "Best-selling product:", products.get(0)));
             writer.write("----------------------------------------------------\n");
 
-            System.out.println("📁 CSV file generated: " + file);
+            System.out.println(Colors.CYBER_YELLOW + "📁 CSV file generated: " + file + Colors.RESET);
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
         }
