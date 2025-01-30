@@ -1,12 +1,35 @@
 import java.util.Scanner;
 
-public class Employee extends User implements Serializable, java.io.Serializable{
+/**
+ * The {@code Employee} class extends the {@link User} class and represents an employee with
+ * specific functionality for managing inventory and displaying orders.
+ * The class implements {@link java.io.Serializable} to allow the object to be serialized.
+ *
+ * <p>
+ * Employees have the ability to add or remove products from the inventory,
+ * display products with low stock, and view orders (including priority orders).
+ * </p>
+ *
+ */
+public class Employee extends User implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructs an {@code Employee} object with the specified username and password.
+     *
+     * @param username the username of the employee
+     * @param password the password of the employee
+     */
     public Employee(String username, String password) {
         super(username, password);
     }
 
+    /**
+     * Adds a product to the inventory after verifying the product's existence and the
+     * requested quantity to be added. The updated inventory is saved.
+     *
+     * @param inventory the inventory to add the product to
+     */
     public void addProduct(Inventory inventory) {
         Scanner scanner = new Scanner(System.in);
         String productName;
@@ -45,6 +68,13 @@ public class Employee extends User implements Serializable, java.io.Serializable
             }
         }
     }
+
+    /**
+     * Removes a specified quantity of a product from the inventory after verifying the product's existence
+     * and ensuring that the quantity to be removed is available. The updated inventory is saved.
+     *
+     * @param inventory the inventory to remove the product from
+     */
     public void removeProduct(Inventory inventory) {
         Scanner scanner = new Scanner(System.in);
         String productName;
@@ -87,16 +117,23 @@ public class Employee extends User implements Serializable, java.io.Serializable
             }
         }
     }
+
     /**
-     * Display products with low stock (less than 5) sort by quantity
+     * Displays the products with low stock (less than 5), sorted by quantity.
+     * The products with low stock are printed with their names and quantities.
      */
     public void displayLowStockProducts() {
         System.out.println(Colors.NEON_BLUE + "Low stock products:" + Colors.RESET);
-        for (byte i=0; i< Main.inventory.sortLowProducts().size();i++) {
+        for (byte i = 0; i < Main.inventory.sortLowProducts().size(); i++) {
             Product product = Main.inventory.sortLowProducts().get(i);
             System.out.println(product.getName() + ": " + product.getQuantity());
         }
     }
+
+    /**
+     * Displays all the orders, sorted by priority and order date. If an order is marked as priority,
+     * it is displayed with the "Priority" label.
+     */
     public void displayOrders() {
         Main.orderManager.sortOrders();
         for (Order order : Main.orderManager.orders) {
@@ -108,8 +145,13 @@ public class Employee extends User implements Serializable, java.io.Serializable
         }
     }
 
-
-
+    /**
+     * This method is overridden but does nothing as the Employee class doesn't implement specific save logic.
+     */
     public void saveData() {}
+
+    /**
+     * This method is overridden but does nothing as the Employee class doesn't implement specific load logic.
+     */
     public void loadData() {}
 }

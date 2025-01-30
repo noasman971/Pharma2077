@@ -1,12 +1,37 @@
 import java.util.Scanner;
 
-public class Admin extends User implements java.io.Serializable{
+/**
+ * The Admin class represents an administrator of the system who can manage employees,
+ * products, and orders within the inventory system.
+ * This class extends the User class and implements Serializable for object serialization.
+ *
+ * <p> Admin functionalities include:
+ * <ul>
+ *     <li>Adding and removing users (employees).</li>
+ *     <li>Adding and removing products from the inventory.</li>
+ *     <li>Displaying orders, sorted by their status.</li>
+ * </ul>
+ *
+ * The Admin class allows for managing users and products in the system, and also viewing orders.
+ */
+public class Admin extends User implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Constructs an Admin object with the specified username and password.
+     *
+     * @param username the username of the admin
+     * @param password the password of the admin
+     */
     public Admin(String username, String password) {
         super(username, password);
     }
 
+    /**
+     * Prompts the admin to enter the details for a new employee and adds the employee to the user manager.
+     *
+     * @param userManager the UserManager that manages the users of the system
+     */
     public void addUser(UserManager userManager) {
         Scanner scanner = new Scanner(System.in);
         String username;
@@ -40,6 +65,12 @@ public class Admin extends User implements java.io.Serializable{
             }
         }
     }
+
+    /**
+     * Prompts the admin to enter the username of an employee and removes the user from the system.
+     *
+     * @param userManager the UserManager that manages the users of the system
+     */
     public void removeUser(UserManager userManager) {
         Scanner scanner = new Scanner(System.in);
         String username;
@@ -69,6 +100,12 @@ public class Admin extends User implements java.io.Serializable{
             }
         }
     }
+
+    /**
+     * Prompts the admin to add a product to the inventory and updates the product's quantity.
+     *
+     * @param inventory the inventory where products are stored
+     */
     public void addProduct(Inventory inventory) {
         Scanner scanner = new Scanner(System.in);
         String productName;
@@ -107,6 +144,12 @@ public class Admin extends User implements java.io.Serializable{
             }
         }
     }
+
+    /**
+     * Prompts the admin to remove a product from the inventory by updating its quantity.
+     *
+     * @param inventory the inventory where products are stored
+     */
     public void removeProduct(Inventory inventory) {
         Scanner scanner = new Scanner(System.in);
         String productName;
@@ -149,6 +192,10 @@ public class Admin extends User implements java.io.Serializable{
             }
         }
     }
+
+    /**
+     * Displays a list of all orders, sorted by their priority status.
+     */
     public void displayOrders() {
         Main.orderManager.sortOrders();
         for (Order order : Main.orderManager.orders) {

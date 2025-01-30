@@ -3,18 +3,39 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Main class to generate sales statistics and a CSV file.
+ * The {@code SalesStatistics} class is responsible for managing sales data, generating statistics,
+ * and creating a CSV file with the details of the sales, including the total quantity sold and revenue.
+ * It keeps track of all sales and provides methods to add sales, calculate statistics, and generate a report.
+ * <p>
+ * The main features of this class include:
+ * <ul>
+ *     <li>Adding new sales</li>
+ *     <li>Calculating statistics like total quantity and revenue per product</li>
+ *     <li>Sorting products by quantity sold</li>
+ *     <li>Generating a CSV file with the sales report</li>
+ * </ul>
+ * </p>
+ *
  */
 public class SalesStatistics {
 
     private static List<Sale> sales = new ArrayList<>();  // Keeping track of all sales
 
+    /**
+     * Sets up the CSV file by gathering sales statistics.
+     * This method calculates the total quantity and revenue per product, sorts the products by quantity sold,
+     * and generates the CSV file with the sales data.
+     * <p>
+     * If no sales have been made, the method prints a message and terminates the execution.
+     * </p>
+     */
     public void setupCSV() {
 
         if (sales.isEmpty()) {
             System.out.println(Colors.CYBER_YELLOW + "Nothing here. End of execution." + Colors.RESET);
-            return;  // Annuler l'exécution si la liste des ventes est vide
+            return;  // Cancels execution if no sales have been recorded
         }
+
         // Storing statistics in a HashMap
         Map<String, double[]> stats = new HashMap<>();
 
@@ -46,6 +67,11 @@ public class SalesStatistics {
         generateCSV(products, quantities, revenues, "sales.csv");
     }
 
+    /**
+     * Adds a sale to the list of recorded sales.
+     *
+     * @param sale the sale to be added
+     */
     public static void addSale(Sale sale) {
         // Adding sale to the static list of sales
         sales.add(sale);
@@ -53,10 +79,11 @@ public class SalesStatistics {
 
     /**
      * Sorts products by quantity sold using the Insertion Sort algorithm.
+     * This method sorts the products based on the quantities sold in descending order.
      *
-     * @param products List of products.
-     * @param quantities Corresponding quantities of the products.
-     * @param revenues Corresponding revenues of the products.
+     * @param products List of products to sort
+     * @param quantities Corresponding quantities of the products
+     * @param revenues Corresponding revenues of the products
      */
     public static void insertionSort(List<String> products, int[] quantities, double[] revenues) {
         int n = quantities.length;
@@ -80,12 +107,13 @@ public class SalesStatistics {
     }
 
     /**
-     * Generates a CSV file with the sales statistics.
+     * Generates a CSV file with the sales statistics, including the product names, quantities sold,
+     * revenues, and additional summary information such as total sales and best-selling product.
      *
-     * @param products List of products.
-     * @param quantities Corresponding quantities of the products.
-     * @param revenues Corresponding revenues of the products.
-     * @param file The name of the CSV file to generate.
+     * @param products List of product names
+     * @param quantities Corresponding quantities sold
+     * @param revenues Corresponding revenues from the sales
+     * @param file The name of the CSV file to generate
      */
     public static void generateCSV(List<String> products, int[] quantities, double[] revenues, String file) {
         try (FileWriter writer = new FileWriter(file)) {

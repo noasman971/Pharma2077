@@ -1,14 +1,16 @@
+import java.awt.*;
+import java.util.Scanner;
+
 /**
  * The {@code User} class represents an abstract user with authentication capabilities.
  * It provides functionalities for login, logout, and placing orders.
  * This class implements {@code Serializable} to allow object serialization.
+ * <p>
+ * Subclasses of {@code User} (e.g., Admin, Employee, Client) will inherit this functionality
+ * and can add more specific behavior as needed.
+ * </p>
  *
- * @author [Your Name]
- * @version 1.0
  */
-import java.awt.*;
-import java.util.Scanner;
-
 public abstract class User implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
     protected String username;
@@ -28,7 +30,7 @@ public abstract class User implements java.io.Serializable {
     /**
      * Retrieves the username of this user.
      *
-     * @return the username
+     * @return the username of the user
      */
     public String getUsername() {
         return this.username;
@@ -47,6 +49,7 @@ public abstract class User implements java.io.Serializable {
 
     /**
      * Logs out the user and prints a logout message.
+     * The message is displayed with a {@link Colors#CYBER_YELLOW} color for emphasis.
      */
     public void logout() {
         System.out.println(Colors.CYBER_YELLOW + username + " has logged out." + Colors.RESET);
@@ -55,7 +58,6 @@ public abstract class User implements java.io.Serializable {
     /**
      * Allows the user to place an order by selecting products from the inventory.
      * The user can add multiple products with specified quantities and mark the order as a priority.
-     *
      * The process involves:
      * <ul>
      *     <li>Selecting a product from inventory</li>
@@ -63,6 +65,11 @@ public abstract class User implements java.io.Serializable {
      *     <li>Confirming the order priority</li>
      *     <li>Adding the order to the order manager</li>
      * </ul>
+     * If the order is completed successfully, a summary of the order is displayed.
+     *
+     * @see Product
+     * @see Order
+     * @see OrderManager
      */
     public void placeOrder() {
         Scanner sc = new Scanner(System.in);

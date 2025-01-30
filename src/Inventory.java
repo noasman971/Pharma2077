@@ -97,7 +97,7 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
         Scanner sc = new Scanner(System.in);
         String productName;
         while (true){
-            System.out.print("Entrer le nom d'un produit : ");
+            System.out.print("Enter product name: ");
             try {
                 productName = sc.nextLine();
                 break;
@@ -211,7 +211,7 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
 
             // Print each product
             for (Product product : products) {
-                System.out.println(Colors.LIGHT_CYAN + product.getName() + " ||" + product.getPrice() + "$ || Quantity : " + product.getQuantity() + Colors.RESET );
+                System.out.println(Colors.LIGHT_CYAN + product.getName() + " || " + product.getPrice() + "$ || Quantity : " + product.getQuantity() + Colors.RESET );
             }
             for (Product product : products) {
                 if (product.getQuantity() < 5) {
