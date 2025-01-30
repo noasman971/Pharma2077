@@ -29,6 +29,7 @@ public abstract class User implements java.io.Serializable{
 
         System.out.println("Please enter the following order:");
 
+        Product produit1 = null;
         while (true) {
             System.out.println("Choose a product (or type 'done' to finish):");
             String inputNameProduct = sc.nextLine();
@@ -42,7 +43,7 @@ public abstract class User implements java.io.Serializable{
             sc.nextLine();
 
 
-            Product produit1 = new Product(Main.inventory.searchProduct(inputNameProduct).getName(), Main.inventory.searchProduct(inputNameProduct).getPrice(), inputQuantity, Main.inventory.searchProduct(inputNameProduct).getCategory());
+            produit1 = new Product(Main.inventory.searchProduct(inputNameProduct).getName(), Main.inventory.searchProduct(inputNameProduct).getPrice(), inputQuantity, Main.inventory.searchProduct(inputNameProduct).getCategory());
             Product stockProduct = Main.inventory.searchProduct(inputNameProduct);
 
 
@@ -62,9 +63,11 @@ public abstract class User implements java.io.Serializable{
                 continue;
             }
             order.addProduct(stockProduct, inputQuantity, produit1);
+            Sale sale = new Sale(produit1.getName(), produit1.getQuantity(), produit1.getPrice());
+            SalesStatistics.addSale(sale);
             System.out.println(inputQuantity + " quantity of " + produit1.getName() + " added to the order.");
         }
-        while (choice){
+        while (choice) {
             System.out.println("This command has priority ? (yes/no)");
             String priority = sc.nextLine();
             if (priority.toLowerCase().equals("yes")) {

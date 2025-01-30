@@ -3,6 +3,7 @@ public class Main {
     public static Inventory inventory = new Inventory();
     public static UserManager userManager = new UserManager();
     public static OrderManager orderManager = new OrderManager();
+    public static SalesStatistics salesStatistics = new SalesStatistics();
 
     public static void run() {
         System.out.println("Pharma2077 started...");
@@ -17,10 +18,12 @@ public class Main {
         inventory.displayProductListInfo();
         orderManager.displayOrders();
         Employee nono = new Employee("nonodubendo", "mdp");
-        //nono.placeOrder();
+        nono.placeOrder();
         //nono.addProduct(inventory);
+        inventory.updateStock(inventory.searchProduct("Tramadol"), 80);
+        inventory.searchProductScanner("Tramadol");
         orderManager.displayOrders();
-
+        salesStatistics.setupCSV();
         inventory.saveData();
         userManager.saveData();
         orderManager.saveData();
