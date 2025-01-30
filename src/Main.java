@@ -18,11 +18,11 @@ public class Main {
         inventory.displayProductListInfo();
         orderManager.displayOrders();
         Employee nono = new Employee("nonodubendo", "mdp");
-        nono.placeOrder();
+        //nono.placeOrder();
         //nono.addProduct(inventory);
-        inventory.updateStock(inventory.searchProduct("Tramadol"), 80);
-        inventory.searchProductScanner("Tramadol");
-        orderManager.displayOrders();
+        //inventory.updateStock(inventory.searchProduct("Tramadol"), 80);
+        //inventory.searchProductScanner("Tramadol");
+        //orderManager.displayOrders();
         salesStatistics.setupCSV();
         inventory.saveData();
         userManager.saveData();

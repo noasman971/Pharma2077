@@ -11,6 +11,10 @@ public class SalesStatistics {
 
     public void setupCSV() {
 
+        if (sales.isEmpty()) {
+            System.out.println("Aucune vente à traiter. Annulation de l'exécution.");
+            return;  // Annuler l'exécution si la liste des ventes est vide
+        }
         // Storing statistics in a HashMap
         Map<String, double[]> stats = new HashMap<>();
 
