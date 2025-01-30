@@ -41,10 +41,15 @@ public class Order implements java.io.Serializable{
     public List<Product> getProducts() {
         return products;
     }
+
     public String getProductsString(List<Product> listproduct) {
         String productString = "";
+        int quantity = 0;
         for(Product product : listproduct){
-            productString = productString + product.getName() + " | ";
+            quantity = product.getQuantity();
+            productString = productString+product.getName() + " Quantity: " + quantity + " ";
+            productString += " | ";
+
         }
         return productString;
     }
