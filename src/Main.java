@@ -14,13 +14,15 @@ public class Main {
         userManager.loadData();
         orderManager.loadData();
         run();
-        inventory.displayProductListInfo();
-        orderManager.displayOrders();
-        Employee nono = new Employee("nonodubendo", "mdp");
-        //nono.placeOrder();
-        //nono.addProduct(inventory);
-        orderManager.displayOrders();
-
+        PharmacyMenu.displayLogo();
+        userManager.authenticateUser();
+//        inventory.displayProductListInfo();
+//        orderManager.displayOrders();
+//        Employee nono = new Employee("nonodubendo", "mdp");
+//        //nono.placeOrder();
+//        //nono.addProduct(inventory);
+//        orderManager.displayOrders();
+        //PharmacyMenu.displayMenu();
         inventory.saveData();
         userManager.saveData();
         orderManager.saveData();

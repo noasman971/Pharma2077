@@ -1,10 +1,12 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 class UserManager implements Serializable {
     private static final String USER_FILE = "user.ser";
     private List<User> users = new ArrayList<>();
+    private User currentUser = null;
 
     public void addUser(User user) {
         users.add(user);
@@ -36,6 +38,47 @@ class UserManager implements Serializable {
             System.out.println("Users successfully loaded from saved file.");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error loading users: " + e.getMessage());
+        }
+    }
+
+
+    public void authenticateUser() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome! Choose an option:");
+        System.out.println("1. Login");
+        System.out.println("2. Sign up");
+        System.out.print("Enter your choice: ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choice == 2) {
+            System.out.print("Enter new username: ");
+            String username = scanner.nextLine();
+            System.out.print("Enter new password: ");
+            String password = scanner.nextLine();
+            Client newUser = new Client(username, password);
+            addUser(newUser);
+            saveData();
+            currentUser = newUser;
+            System.out.println("Sign-up successful! Logged in as " + username);
+        } else {
+            System.out.print("Enter username: ");
+            String username = scanner.nextLine();
+            System.out.print("Enter password: ");
+            String password = scanner.nextLine();
+
+            for (User user : users) {
+                if (user.login(username, password)) {
+                    currentUser = user;
+                    System.out.println("Login successful! Welcome " + username);
+                    return;
+                }
+            }
+            System.out.println("Invalid credentials");
+
+            //need clear
+            PharmacyMenu.displayLogo();
+            authenticateUser();
         }
     }
 }

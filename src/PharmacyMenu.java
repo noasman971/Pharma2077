@@ -1,21 +1,24 @@
 import java.util.Scanner;
 
 public class PharmacyMenu {
+    public static Object displayLogo;
     private static Scanner scanner = new Scanner(System.in);
 
+    public static void displayLogo() {
+        System.out.println(Colors.BRIGHT_PURPLE + "                             " + Colors.MEDICAL_CYAN + "$$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\                                                    " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$$$$$$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$$$$$$$" + Colors.BRIGHT_PURPLE + "\\       ");
+        System.out.println("                             " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|                                                  " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$$ " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ \\____" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "|\\____" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "|      ");
+        System.out.println("                             " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|  " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$$$$$$" + Colors.BRIGHT_PURPLE + "\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\" + Colors.MEDICAL_CYAN + "$$$$\\   " + Colors.MEDICAL_CYAN + "$$$$$$" + Colors.BRIGHT_PURPLE + "\\  \\__/  " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|    " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/     " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/       ");
+        System.out.println("                             " + Colors.MEDICAL_CYAN + "$$$$$$$  " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\  \\____" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\ " + Colors.MEDICAL_CYAN + "$$  _" + Colors.MEDICAL_CYAN + "$$  _" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\  \\____" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\  " + Colors.MEDICAL_CYAN + "$$$$$$  " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\" + Colors.MEDICAL_CYAN + "$$" + Colors.BRIGHT_PURPLE + "\\" + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|   " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/     " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/        ");
+        System.out.println("                             " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "____/ " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|  " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "| " + Colors.MEDICAL_CYAN + "$$$$$$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|  " + Colors.BRIGHT_PURPLE + "\\__|" + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "/ " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "/ " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "| " + Colors.MEDICAL_CYAN + "$$$$$$$ |" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "____/ " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "\\" + Colors.MEDICAL_CYAN + "$$$$ |  " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/     " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/         ");
+        System.out.println("                             " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|      " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|  " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|      " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "| " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "| " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "__" + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|      " + Colors.MEDICAL_CYAN + "$$ |\\" + Colors.MEDICAL_CYAN + "$$$ " + Colors.BRIGHT_PURPLE + "| " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/     " + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/          ");
+        System.out.println("                             " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|      " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|  " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|\\" + Colors.MEDICAL_CYAN + "$$$$$$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|      " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "| " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "| " + Colors.MEDICAL_CYAN + "$$ " + Colors.BRIGHT_PURPLE + "|\\" + Colors.MEDICAL_CYAN + "$$$$$$$ " + Colors.BRIGHT_PURPLE + "|" + Colors.MEDICAL_CYAN + "$$$$$$$$" + Colors.BRIGHT_PURPLE + "\\ \\" + Colors.MEDICAL_CYAN + "$$$$$$  /" + Colors.MEDICAL_CYAN + "$$  " + Colors.BRIGHT_PURPLE + "/    " + Colors.MEDICAL_CYAN + " $$  " + Colors.BRIGHT_PURPLE + "/           ");
+        System.out.println("                             \\__|      \\__|  \\__| \\_______|\\__|      \\__| \\__| \\__| \\_______|\\________| \\______/ \\__/      \\__/            ");
+        System.out.println(Colors.RESET);
+    }
 
     public static void displayMenu() {
         while (true) {
             System.out.println("");
-            System.out.println("\u001B[33m                             $$$$$$$\\  $$\\                                                    $$$$$$\\   $$$$$$\\  $$$$$$$$\\ $$$$$$$$\\       \n" +
-                    "                             $$  __$$\\ $$ |                                                  $$  __$$\\ $$$ __$$\\ \\____$$  |\\____$$  |      \n" +
-                    "                             $$ |  $$ |$$$$$$$\\   $$$$$$\\   $$$$$$\\  $$$$$$\\$$$$\\   $$$$$$\\  \\__/  $$ |$$$$\\ $$ |    $$  /     $$  /       \n" +
-                    "                             $$$$$$$  |$$  __$$\\  \\____$$\\ $$  __$$\\ $$  _$$  _$$\\  \\____$$\\  $$$$$$  |$$\\$$\\$$ |   $$  /     $$  /        \n" +
-                    "                             $$  ____/ $$ |  $$ | $$$$$$$ |$$ |  \\__|$$ / $$ / $$ | $$$$$$$ |$$  ____/ $$ \\$$$$ |  $$  /     $$  /         \n" +
-                    "                             $$ |      $$ |  $$ |$$  __$$ |$$ |      $$ | $$ | $$ |$$  __$$ |$$ |      $$ |\\$$$ | $$  /     $$  /          \n" +
-                    "                             $$ |      $$ |  $$ |\\$$$$$$$ |$$ |      $$ | $$ | $$ |\\$$$$$$$ |$$$$$$$$\\ \\$$$$$$  /$$  /     $$  /           \n" +
-                    "                             \\__|      \\__|  \\__| \\_______|\\__|      \\__| \\__| \\__| \\_______|\\________| \\______/ \\__/      \\__/            \n" +
-                    "                                                                                                              \u001B[0m" );
             System.out.println("\u001B[33m                                                                 =========== Main Menu =========== \u001B[0m");
             System.out.println("                                                                     \u001B[36m[1]\u001B[0m Product Management ");
             System.out.println("                                                                     \u001B[36m[2]\u001B[0m Order Management");
@@ -26,8 +29,6 @@ public class PharmacyMenu {
             System.out.println();
             System.out.print("                                                                         Choose an option: ");
             int choice = getValidInteger();
-
-
 
 
             switch (choice) {
@@ -87,8 +88,6 @@ public class PharmacyMenu {
             int choice = getValidInteger();
             if (choice == 5) return;
         }
-
-
         // Add associated functionalities
     }
 
@@ -104,8 +103,6 @@ public class PharmacyMenu {
             int choice = getValidInteger();
             if (choice == 3) return;
         }
-
-
         // Add associated functionalities
     }
 
@@ -122,8 +119,6 @@ public class PharmacyMenu {
             int choice = getValidInteger();
             if (choice == 4) return;
         }
-
-
         // Add associated functionalities
     }
 
@@ -140,10 +135,6 @@ public class PharmacyMenu {
             int choice = getValidInteger();
             if (choice == 4) return;
         }
-
-
         // Add associated functionalities
     }
-
-
 }
