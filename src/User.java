@@ -46,7 +46,6 @@ public abstract class User implements java.io.Serializable{
                     break;
                 }
 
-                // Recherche du produit dans l'inventaire
                 Product stockProduct = Main.inventory.searchProduct(inputNameProduct);
                 if (stockProduct == null) {
                     System.out.println("Product not found in inventory.");
@@ -56,7 +55,6 @@ public abstract class User implements java.io.Serializable{
                 System.out.println("Current stock for " + stockProduct.getName() + ": " + stockProduct.getQuantity());
                 System.out.println("Enter quantity:");
 
-                // Validation de la quantité
                 int inputQuantity;
                 try {
                     inputQuantity = Integer.parseInt(sc.nextLine().trim());
@@ -75,7 +73,6 @@ public abstract class User implements java.io.Serializable{
                     continue;
                 }
 
-                // Création du produit pour la commande
                 Product orderProduct = new Product(
                         stockProduct.getName(),
                         stockProduct.getPrice(),
@@ -83,17 +80,14 @@ public abstract class User implements java.io.Serializable{
                         stockProduct.getCategory()
                 );
 
-                // Ajout du produit à la commande
                 order.addProduct(stockProduct, inputQuantity, orderProduct);
 
-                // Enregistrement de la vente
                 Sale sale = new Sale(orderProduct.getName(), orderProduct.getQuantity(), orderProduct.getPrice());
                 SalesStatistics.addSale(sale);
 
                 System.out.println(inputQuantity + " " + orderProduct.getName() + " added to the order.");
 
-                // Affichage de la commande en cours
-                System.out.println("\nCurrent order contents:");
+                System.out.println("Current order contents:");
                 order.diplayProducts();
             } catch (Exception e) {
                 System.out.println("An error occurred. Please try again.");
@@ -101,7 +95,6 @@ public abstract class User implements java.io.Serializable{
             }
         }
 
-        // Gestion de la priorité
         while (true) {
             System.out.println("Is this order priority? (yes/no)");
             String priority = sc.nextLine().trim().toLowerCase();
@@ -117,7 +110,6 @@ public abstract class User implements java.io.Serializable{
             }
         }
 
-        // Finalisation de la commande
         Main.orderManager.addOrder(order);
         System.out.println("Order placed successfully!");
         System.out.println("---Order summary---");
