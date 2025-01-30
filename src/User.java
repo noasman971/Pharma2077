@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public abstract class User implements java.io.Serializable{
+    private static final long serialVersionUID = 1L;
     protected String username;
     protected String password;
 
@@ -20,10 +21,10 @@ public abstract class User implements java.io.Serializable{
     /**
      * Verification if it's possible to order
      * Do an order
-     * @param order
      */
-    public void placeOrder(Order order) {
-
+    public void placeOrder() {
+        boolean choice = false;
+        Order order = new Order();
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Please enter the following order:");
@@ -33,11 +34,13 @@ public abstract class User implements java.io.Serializable{
             String inputNameProduct = sc.nextLine();
 
             if (inputNameProduct.equals("done")) {
+                choice = true;
                 break;
             }
             System.out.println("Choose a quantity:");
             byte inputQuantity = sc.nextByte();
             sc.nextLine();
+
 
             Product produit1 = new Product(Main.inventory.searchProduct(inputNameProduct).getName(), Main.inventory.searchProduct(inputNameProduct).getPrice(), inputQuantity, Main.inventory.searchProduct(inputNameProduct).getCategory());
             Product stockProduct = Main.inventory.searchProduct(inputNameProduct);
@@ -61,8 +64,21 @@ public abstract class User implements java.io.Serializable{
             order.addProduct(stockProduct, inputQuantity, produit1);
             System.out.println(inputQuantity + " quantity of " + produit1.getName() + " added to the order.");
         }
-        order.diplayProducts();
+        while (choice){
+            System.out.println("This command has priority ? (yes/no)");
+            String priority = sc.nextLine();
+            if (priority.toLowerCase().equals("yes")) {
+                order.setPriority(true);
+                choice = false;
+            } else if (priority.toLowerCase().equals("no")) {
+                //PARCEQUE VRAIMENT, on sais jamais
+                order.setPriority(false);
+                choice = false;
 
+            }
+        }
+        order.diplayProducts();
+        Main.orderManager.addOrder(order);
         System.out.println("Order placed successfully.");
 
     }

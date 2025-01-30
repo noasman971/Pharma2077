@@ -9,6 +9,7 @@ import org.json.simple.parser.JSONParser;
  * Implements Stockable and Serializable for stock management and data saving/loading.
  */
 public class Inventory implements Stockable, Serializable, java.io.Serializable {
+    private static final long serialVersionUID = 1L;
     private List<Product> products = new ArrayList<>();
     private Map<String, Category> categories = new HashMap<>();
     private static final String SAVE_FILE = "pharmacy_data.ser";
@@ -166,6 +167,24 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
             // Print each product
             for (Product product : products) {
                 System.out.println(Colors.LIGHT_CYAN + product.getName() + Colors.RESET);
+            }
+        }
+    }
+
+    /**
+     * Displays the list of products, sorting them first if necessary.
+     */
+    public void displayProductListInfo() {
+        // Check if the list is empty
+        if (products.isEmpty()) {
+            System.out.println(Colors.NEON_PINK + "No products found" + Colors.RESET);
+        } else {
+            // Sort the list before displaying
+            insertionSort(products);
+
+            // Print each product
+            for (Product product : products) {
+                System.out.println(Colors.LIGHT_CYAN + product.getName() + " // " + product.getPrice() + "$ // Quantity : " + product.getQuantity() + Colors.RESET );
             }
         }
     }

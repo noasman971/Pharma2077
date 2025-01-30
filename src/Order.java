@@ -1,11 +1,14 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order {
+public class Order implements java.io.Serializable{
+    private static final long serialVersionUID = 1L;
     private List<Product> products;
     private LocalDateTime orderDate;
-
+    private boolean isPriority = false;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     public Order() {
         this.products = new ArrayList<>();
         this.orderDate = LocalDateTime.now();
@@ -32,5 +35,21 @@ public class Order {
     }
 
     public LocalDateTime getOrderDate() { return orderDate; }
-    public List<Product> getProducts() { return products; }
+    public String getFormattedOrderDate() {
+        return orderDate.format(formatter);
+    }
+    public List<Product> getProducts() {
+        return products;
+    }
+    public String getProductsString(List<Product> listproduct) {
+        String productString = "";
+        for(Product product : listproduct){
+            productString = productString + product.getName() + " | ";
+        }
+        return productString;
+    }
+    public boolean isPriority() { return isPriority; }
+    public void setPriority(boolean priority){
+        this.isPriority = priority;
+    }
 }
