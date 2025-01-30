@@ -12,18 +12,19 @@ public class SalesStatistics {
     public void setupCSV() {
 
         if (sales.isEmpty()) {
-            System.out.println("Aucune vente à traiter. Annulation de l'exécution.");
-            return;  // Annuler l'exécution si la liste des ventes est vide
+            System.out.println("None sale to deal. Cancel the execution.");
+            return;  // Cancel execution if the array of vents is empty
         }
         // Storing statistics in a HashMap
         Map<String, double[]> stats = new HashMap<>();
 
         // Example sales data
         for (Sale sale : sales) {
-            if (!stats.containsKey(sale.product)) {
-                stats.put(sale.product, new double[]{0, 0});
+            String productKey = sale.product;
+            if (!stats.containsKey(productKey)) {
+                stats.put(productKey, new double[]{0, 0});
             }
-            double[] values = stats.get(sale.product);
+            double[] values = stats.get(productKey);
             values[0] += sale.quantity;  // Total quantity
             values[1] += sale.getTotalPrice();  // Revenue
         }
