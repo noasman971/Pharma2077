@@ -65,9 +65,28 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
     }
 
     public Product searchProduct(String productName) {
-        return products.stream()
-                .filter(p -> p.getName().equalsIgnoreCase(productName))
-                .findFirst().orElse(null);
+        int start = 0;
+        int end = products.size() - 1;
+
+        // Ensure the list is sorted before searching
+        insertionSort(products);
+
+        while (start <= end) {
+            int mid = (start + end) / 2;
+            int compare = products.get(mid).getName().compareTo(productName);
+
+            if (compare == 0) {
+                return products.get(mid); // Return the product if found
+            }
+
+            if (compare < 0) {
+                start = mid + 1; // Search in the right half
+            } else {
+                end = mid - 1; // Search in the left half
+            }
+
+        }
+        return null;
     }
     /**
      * Searches for a product by its name using binary search.
@@ -114,7 +133,10 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
         }
         return lowStockProducts;
     }
-
+    /**
+     * Return a list of products with low stock (less than 5) sort by quanrtity
+     * @return a list of products
+     */
     public List<Product> sortLowProducts() {
         List<Product> lowStockProducts = getLowStockProducts();
 
@@ -135,6 +157,9 @@ public class Inventory implements Stockable, Serializable, java.io.Serializable 
         return lowStockProducts;
     }
 
+    /**
+     * Display products with low stock (less than 5) sort by quantity
+     */
     public void displayLowStockProducts() {
         System.out.println("Low stock products:");
         for (byte i=0; i< sortLowProducts().size();i++) {

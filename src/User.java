@@ -19,8 +19,8 @@ public abstract class User implements java.io.Serializable{
     }
 
     /**
-     * Verification if it's possible to order
-     * Do an order
+     * This method allows the user to place an order by selecting products from the inventory.
+     * The user can add multiple products with specified quantities and mark the order as a priority.
      */
     public void placeOrder() {
         boolean choice = false;
@@ -33,18 +33,18 @@ public abstract class User implements java.io.Serializable{
         while (true) {
             System.out.println("Choose a product (or type 'done' to finish):");
             String inputNameProduct = sc.nextLine();
+            try {
+                if (inputNameProduct.equals("done")) {
+                    choice = true;
+                    break;
+                }
+                System.out.println("Choose a quantity:");
+                byte inputQuantity = sc.nextByte();
+                sc.nextLine();
 
-            if (inputNameProduct.equals("done")) {
-                choice = true;
-                break;
-            }
-            System.out.println("Choose a quantity:");
-            byte inputQuantity = sc.nextByte();
-            sc.nextLine();
 
-
-            produit1 = new Product(Main.inventory.searchProduct(inputNameProduct).getName(), Main.inventory.searchProduct(inputNameProduct).getPrice(), inputQuantity, Main.inventory.searchProduct(inputNameProduct).getCategory());
-            Product stockProduct = Main.inventory.searchProduct(inputNameProduct);
+                produit1 = new Product(Main.inventory.searchProduct(inputNameProduct).getName(), Main.inventory.searchProduct(inputNameProduct).getPrice(), inputQuantity, Main.inventory.searchProduct(inputNameProduct).getCategory());
+                Product stockProduct = Main.inventory.searchProduct(inputNameProduct);
 
 
             if (stockProduct == null) {
@@ -61,12 +61,15 @@ public abstract class User implements java.io.Serializable{
             if (stockProduct.getQuantity() < inputQuantity) {
                 System.out.println("Insufficient stock for " + stockProduct.getName());
                 continue;
-            }
+            }else{
             order.addProduct(stockProduct, inputQuantity, produit1);
             Sale sale = new Sale(produit1.getName(), produit1.getQuantity(), produit1.getPrice());
             SalesStatistics.addSale(sale);
             System.out.println(inputQuantity + " quantity of " + produit1.getName() + " added to the order.");
-        }
+            }
+        }catch (Exception e){
+                continue;
+            }
         while (choice) {
             System.out.println("This command has priority ? (yes/no)");
             String priority = sc.nextLine();
@@ -74,15 +77,20 @@ public abstract class User implements java.io.Serializable{
                 order.setPriority(true);
                 choice = false;
             } else if (priority.toLowerCase().equals("no")) {
-                //PARCEQUE VRAIMENT, on sais jamais
+                //BECAUSE REALLY, WE NEVER KNOW
                 order.setPriority(false);
                 choice = false;
 
             }
         }
         order.diplayProducts();
-        Main.orderManager.addOrder(order);
-        System.out.println("Order placed successfully.");
+        if(order.getProducts().size() == 0){
+            System.out.println("There are no products in your order.");
+            return;
+        } else {
+            Main.orderManager.addOrder(order);
+            System.out.println("Order placed successfully.");
+        }
 
     }
 }
