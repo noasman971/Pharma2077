@@ -27,35 +27,43 @@ public abstract class User implements java.io.Serializable{
      * The user can add multiple products with specified quantities and mark the order as a priority.
      */
     public void placeOrder() {
-        boolean choice = false;
-        Order order = new Order();
         Scanner sc = new Scanner(System.in);
+        Order order = new Order();
+        boolean isOrderComplete = false;
 
-        System.out.println("Please enter the following order:");
+        System.out.println("Please enter your order:");
 
-        Product produit1 = null;
-        while (true) {
-            System.out.println("Choose a product (or type 'done' to finish):");
-            String inputNameProduct = sc.nextLine();
+        while (!isOrderComplete) {
             try {
-                if (inputNameProduct.equals("done")) {
-                    choice = true;
+                System.out.println("\nChoose a product (or type 'done' to finish):");
+                String inputNameProduct = sc.nextLine().trim();
+
+                if (inputNameProduct.equalsIgnoreCase("done")) {
+                    if (order.getProducts().isEmpty()) {
+                        System.out.println("Cannot place an empty order. Please add at least one product.");
+                        continue;
+                    }
                     break;
                 }
-                System.out.println("Choose a quantity:");
-                byte inputQuantity = sc.nextByte();
-                sc.nextLine();
 
-
-                produit1 = new Product(Main.inventory.searchProduct(inputNameProduct).getName(), Main.inventory.searchProduct(inputNameProduct).getPrice(), inputQuantity, Main.inventory.searchProduct(inputNameProduct).getCategory());
+                // Recherche du produit dans l'inventaire
                 Product stockProduct = Main.inventory.searchProduct(inputNameProduct);
-
-
                 if (stockProduct == null) {
                     System.out.println("Product not found in inventory.");
                     continue;
                 }
 
+                System.out.println("Current stock for " + stockProduct.getName() + ": " + stockProduct.getQuantity());
+                System.out.println("Enter quantity:");
+
+                // Validation de la quantité
+                int inputQuantity;
+                try {
+                    inputQuantity = Integer.parseInt(sc.nextLine().trim());
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid number.");
+                    continue;
+                }
 
                 if (inputQuantity <= 0) {
                     System.out.println("Please enter a positive quantity.");
@@ -63,40 +71,56 @@ public abstract class User implements java.io.Serializable{
                 }
 
                 if (stockProduct.getQuantity() < inputQuantity) {
-                    System.out.println("Insufficient stock for " + stockProduct.getName());
+                    System.out.println("Insufficient stock. Available: " + stockProduct.getQuantity());
                     continue;
-                } else {
-                    order.addProduct(stockProduct, inputQuantity, produit1);
-                    Sale sale = new Sale(produit1.getName(), produit1.getQuantity(), produit1.getPrice());
-                    SalesStatistics.addSale(sale);
-                    System.out.println(inputQuantity + " quantity of " + produit1.getName() + " added to the order.");
                 }
-            } catch (Exception e) {
-                continue;
-            }
-            while (choice) {
-                System.out.println("This command has priority ? (yes/no)");
-                String priority = sc.nextLine();
-                if (priority.toLowerCase().equals("yes")) {
-                    order.setPriority(true);
-                    choice = false;
-                } else if (priority.toLowerCase().equals("no")) {
-                    //BECAUSE REALLY, WE NEVER KNOW
-                    order.setPriority(false);
-                    choice = false;
 
-                }
-            }
-            order.diplayProducts();
-            if (order.getProducts().size() == 0) {
-                System.out.println("There are no products in your order.");
-                return;
-            } else {
-                Main.orderManager.addOrder(order);
-                Main.orderManager.saveData();
-                System.out.println("Order placed successfully.");
+                // Création du produit pour la commande
+                Product orderProduct = new Product(
+                        stockProduct.getName(),
+                        stockProduct.getPrice(),
+                        inputQuantity,
+                        stockProduct.getCategory()
+                );
+
+                // Ajout du produit à la commande
+                order.addProduct(stockProduct, inputQuantity, orderProduct);
+
+                // Enregistrement de la vente
+                Sale sale = new Sale(orderProduct.getName(), orderProduct.getQuantity(), orderProduct.getPrice());
+                SalesStatistics.addSale(sale);
+
+                System.out.println(inputQuantity + " " + orderProduct.getName() + " added to the order.");
+
+                // Affichage de la commande en cours
+                System.out.println("\nCurrent order contents:");
+                order.diplayProducts();
+            } catch (Exception e) {
+                System.out.println("An error occurred. Please try again.");
+                continue;
             }
         }
 
+        // Gestion de la priorité
+        while (true) {
+            System.out.println("Is this order priority? (yes/no)");
+            String priority = sc.nextLine().trim().toLowerCase();
+
+            if (priority.equals("yes")) {
+                order.setPriority(true);
+                break;
+            } else if (priority.equals("no")) {
+                order.setPriority(false);
+                break;
+            } else {
+                System.out.println("Please enter 'yes' or 'no'.");
+            }
+        }
+
+        // Finalisation de la commande
+        Main.orderManager.addOrder(order);
+        System.out.println("Order placed successfully!");
+        System.out.println("---Order summary---");
+        order.diplayProducts();
     }
 }
