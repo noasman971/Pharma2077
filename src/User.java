@@ -18,15 +18,11 @@ public abstract class User implements java.io.Serializable{
         return this.username.equals(username) && this.password.equals(password);
     }
 
-    public void logout() {
-        System.out.println(username + " has logged out.");
-    }
-
     /**
      * This method allows the user to place an order by selecting products from the inventory.
      * The user can add multiple products with specified quantities and mark the order as a priority.
      */
-    public void placeOrder() {
+    public void makeOrder() {
         Scanner sc = new Scanner(System.in);
         Order order = new Order();
         boolean isOrderComplete = false;

@@ -20,8 +20,6 @@ class OrderManager implements Serializable, java.io.Serializable {
                 .thenComparing(Order::getOrderDate));
     }
 
-
-
     @Override
     public void saveData() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ORDER_FILE))) {

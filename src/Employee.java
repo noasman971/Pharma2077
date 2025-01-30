@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Employee extends User implements Serializable, java.io.Serializable{
+public class Employee extends User implements java.io.Serializable{
     private static final long serialVersionUID = 1L;
 
     public Employee(String username, String password) {
@@ -107,9 +107,4 @@ public class Employee extends User implements Serializable, java.io.Serializable
             }
         }
     }
-
-
-
-    public void saveData() {}
-    public void loadData() {}
 }

@@ -131,7 +131,7 @@ public class PharmacyMenu {
             }
         } else if (currentUser instanceof Client) {
             switch (choice) {
-                case 1 -> currentUser.placeOrder();
+                case 1 -> currentUser.makeOrder();
                 case 2 -> Main.inventory.displayProductList();
                 case 3 -> Main.inventory.searchProductScanner();
                 default -> System.out.println("Invalid option, please try again.");
@@ -145,7 +145,7 @@ public class PharmacyMenu {
         System.out.println("2 - Remove User");
         int choice = getValidInteger();
         switch (choice) {
-            case 1 -> ((Admin)currentUser).addUser(Main.userManager);
+            case 1 -> ((Admin)currentUser). addUser(Main.userManager);
             case 2 -> ((Admin)currentUser).removeUser(Main.userManager);
             default -> System.out.println("Invalid choice.");
         }

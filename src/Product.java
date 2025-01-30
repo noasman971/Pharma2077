@@ -15,7 +15,6 @@ public class Product implements java.io.Serializable {
     public double getPrice() { return price; }
     public int getQuantity() { return quantity; }
     public Category getCategory() { return category; }
-
     public void setPrice(double price) { this.price = price; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 }
