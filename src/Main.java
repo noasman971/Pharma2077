@@ -14,6 +14,7 @@ public class Main {
         inventory.loadData();
         userManager.loadData();
         orderManager.loadData();
+        salesStatistics.loadData();
         run();
         PharmacyMenu.start();
 //        inventory.displayProductListInfo();

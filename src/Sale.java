@@ -1,7 +1,7 @@
 /**
  * Class representing a sale with a product, its quantity, and unit price.
  */
-class Sale {
+class Sale implements java.io.Serializable{
     String product;
     int quantity;
     double unitPrice;
