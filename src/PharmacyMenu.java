@@ -201,7 +201,8 @@ public class PharmacyMenu {
         System.out.println(Colors.LIGHT_CYAN + "2 - Add Item" + Colors.RESET);
         System.out.println(Colors.LIGHT_CYAN + "3 - Remove Item" + Colors.RESET);
         System.out.println(Colors.LIGHT_CYAN + "4 - Search" + Colors.RESET);
-        System.out.println(Colors.LIGHT_CYAN + "5 - Load delivery !" + Colors.RESET);
+        System.out.println(Colors.LIGHT_CYAN + "5 - Display Low Products" + Colors.RESET);
+        System.out.println(Colors.LIGHT_CYAN + "6 - Load delivery !" + Colors.RESET);
         int choice = getValidInteger();
         switch (choice) {
             case 1:
@@ -225,6 +226,9 @@ public class PharmacyMenu {
                 Main.inventory.searchProductScanner();
                 break;
             case 5:
+                ((Employee)currentUser).displayLowStockProducts();
+
+            case 6:
                 Main.inventory.loadFromJSON("stocks_pharma.json");
                 Main.inventory.saveData();
                 Main.orderManager.saveData();
